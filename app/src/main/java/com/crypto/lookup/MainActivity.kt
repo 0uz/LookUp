@@ -7,8 +7,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.binance.api.client.BinanceApiClientFactory
+import com.binance.api.client.BinanceApiWebSocketClient
+import com.binance.api.client.domain.market.CandlestickInterval
 import com.crypto.lookup.databinding.ActivityMainBinding
+import com.crypto.lookup.databinding.FragmentHomeBinding
 import com.crypto.lookup.service.LookUpFirebaseMessagingService
+import com.github.mikephil.charting.charts.CandleStickChart
+import com.github.mikephil.charting.data.CandleEntry
+import org.apache.commons.lang3.mutable.Mutable
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,4 +43,5 @@ class MainActivity : AppCompatActivity() {
         val x = LookUpFirebaseMessagingService()
         x.registerToken()
     }
+
 }

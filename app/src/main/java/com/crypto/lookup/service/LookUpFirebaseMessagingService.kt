@@ -4,6 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import com.crypto.lookup.R
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
@@ -16,7 +17,7 @@ class LookUpFirebaseMessagingService : FirebaseMessagingService() {
     val db = Firebase.firestore
 
     override fun onNewToken(token: String) {
-        //TODO on new token change in database
+
         super.onNewToken(token)
     }
 
@@ -28,7 +29,6 @@ class LookUpFirebaseMessagingService : FirebaseMessagingService() {
             }
 
             val token = task.result
-            Log.d("TOKEN", token)
             val coins : List<String> = listOf("BTCUSDT","ETHUSDT")
 
             val user = hashMapOf(

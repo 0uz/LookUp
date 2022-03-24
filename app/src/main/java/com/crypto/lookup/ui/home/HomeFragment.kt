@@ -25,8 +25,6 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private var _binding: FragmentHomeBinding? = null
-
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -34,24 +32,23 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val candleStickChart: CandleStickChart = binding.candleStickChart
-
         candleStickChart.axisRight.isEnabled = false
         candleStickChart.animateY(100)
-        homeViewModel.getData().observe(viewLifecycleOwner, Observer {
+        homeViewModel.loadData()
+        homeViewModel.getData().observe(this, Observer {
             Log.w("OBSERVE","TEST")
             val candleDataSet = CandleDataSet(it,"Data")
+            val candleData = CandleData(candleDataSet)
+            candleStickChart.data = candleData;
             candleDataSet.axisDependency = YAxis.AxisDependency.LEFT
             candleDataSet.shadowColor = Color.GRAY
             candleDataSet.shadowWidth = 0.5f
@@ -60,10 +57,9 @@ class HomeFragment : Fragment() {
             candleDataSet.neutralColor = Color.BLUE
             candleDataSet.increasingPaintStyle = Paint.Style.FILL
             candleDataSet.decreasingPaintStyle = Paint.Style.FILL
-            val candleData = CandleData(candleDataSet)
-            candleStickChart.data = candleData;
             candleStickChart.invalidate()
         })
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?){

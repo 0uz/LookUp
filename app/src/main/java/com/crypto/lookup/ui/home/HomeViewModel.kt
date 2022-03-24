@@ -9,29 +9,31 @@ import com.binance.api.client.domain.market.CandlestickInterval
 import com.github.mikephil.charting.data.CandleEntry
 
 class HomeViewModel : ViewModel() {
-    private val data : MutableLiveData<MutableList<CandleEntry>> by lazy {
-        MutableLiveData<MutableList<CandleEntry>>().also {
-            loadData()
-        }
-    }
+    private val _data = MutableLiveData<MutableList<CandleEntry>>()
 
-    fun addData(data:CandleEntry){
-        this.data.value?.add(data)
-    }
 
     fun getData(): LiveData<MutableList<CandleEntry>> {
-        return data;
+        return _data;
     }
 
-    private fun loadData() {
+    fun loadData() {
         val factory: BinanceApiClientFactory = BinanceApiClientFactory.newInstance(
             "QaTHifDPd0jcU4NlNwcf8DptOykOJISTtpcLqY5AC3UiKDB3yOGNGmxuhlcmmiN9",
             "P1DENk2ufvuvYHyFbv0iu7AvWFWIYmgRkJjN9YwXr3C0WxjCzmF9KOHlnMbi4fTj")
         val client: BinanceApiWebSocketClient = factory.newWebSocketClient()
         var counter = 1
+        _data.value = mutableListOf(CandleEntry(
+            1f,
+            1f,
+            1f,
+            1f,
+            1f
+        ))
         client.onCandlestickEvent("btcusdt", CandlestickInterval.ONE_MINUTE) {
+            val tempArr = mutableListOf<CandleEntry>()
+
             if (it.barFinal || counter == 1) {
-                data.value?.add(
+                _data.value!!.add(
                     CandleEntry(
                         counter.toFloat(),
                         it.high.toFloat(),
@@ -42,7 +44,7 @@ class HomeViewModel : ViewModel() {
                 )
                 counter++
             } else {
-                data.value?.set(data.value!!.lastIndex, CandleEntry(
+                _data.value!!.set(_data.value!!.lastIndex, CandleEntry(
                     counter.toFloat(),
                     it.high.toFloat(),
                     it.low.toFloat(),
@@ -51,8 +53,7 @@ class HomeViewModel : ViewModel() {
                 )
                 )
             }
-            println(data.value)
-
+            println(_data.value)
         }
     }
 

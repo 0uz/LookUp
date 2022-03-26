@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.binance.api.client.BinanceApiClientFactory
+import com.binance.api.client.BinanceApiRestClient
 import com.binance.api.client.BinanceApiWebSocketClient
 import com.binance.api.client.domain.market.CandlestickInterval
 import com.crypto.lookup.databinding.FragmentHomeBinding
@@ -20,6 +21,11 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
 import com.github.mikephil.charting.data.CandleEntry
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.net.URL
 
 class HomeFragment : Fragment() {
 
@@ -42,8 +48,6 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val candleStickChart: CandleStickChart = binding.candleStickChart
         candleStickChart.axisRight.isEnabled = false
-        candleStickChart.animateY(100)
-        homeViewModel.loadData()
         homeViewModel.getData().observe(this, Observer {
             Log.w("OBSERVE","TEST")
             val candleDataSet = CandleDataSet(it,"Data")

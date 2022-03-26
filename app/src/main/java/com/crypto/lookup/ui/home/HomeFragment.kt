@@ -3,29 +3,17 @@ package com.crypto.lookup.ui.home
 import android.graphics.Color
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.binance.api.client.BinanceApiClientFactory
-import com.binance.api.client.BinanceApiRestClient
-import com.binance.api.client.BinanceApiWebSocketClient
-import com.binance.api.client.domain.market.CandlestickInterval
 import com.crypto.lookup.databinding.FragmentHomeBinding
 import com.github.mikephil.charting.charts.CandleStickChart
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.CandleData
 import com.github.mikephil.charting.data.CandleDataSet
-import com.github.mikephil.charting.data.CandleEntry
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.net.URL
 
 class HomeFragment : Fragment() {
 
@@ -47,10 +35,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         val candleStickChart: CandleStickChart = binding.candleStickChart
+        candleStickChart.cameraDistance = 100F
         candleStickChart.axisRight.isEnabled = false
+        candleStickChart.setBackgroundColor(Color.GRAY)
+        candleStickChart.description.isEnabled = false
         homeViewModel.getData().observe(this, Observer {
-            Log.w("OBSERVE","TEST")
-            val candleDataSet = CandleDataSet(it,"Data")
+            val candleDataSet = CandleDataSet(it, "BTC USDT")
             val candleData = CandleData(candleDataSet)
             candleStickChart.data = candleData;
             candleDataSet.axisDependency = YAxis.AxisDependency.LEFT

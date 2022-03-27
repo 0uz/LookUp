@@ -9,20 +9,20 @@
 
     <EditText
             android:layout_width="260dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/RegisterPassword"
             android:background="#FFFFFF" android:hint="Password"
             android:padding="10dp"
-            android:textColor="#54D0B4" android:textSize="16sp"
+            android:textColor="@color/turquois" android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/RegisterEmail"
             app:layout_constraintEnd_toEndOf="@+id/RegisterEmail"
             app:layout_constraintTop_toBottomOf="@+id/RegisterEmail" android:layout_marginTop="12dp"
-            app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"/>
+            app:layout_constraintHorizontal_bias="0.0" android:textColorHint="@color/turquois"/>
     <EditText
             android:layout_width="260dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/RegisterPasswordAgain"
@@ -35,33 +35,33 @@
             app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"/>
     <TextView
             android:text="Personal Information"
-            android:layout_width="260dp"
-            android:layout_height="40dp" android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView2"
             android:textColor="#FFFFFF" android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/RegisterPasswordAgain"
-            app:layout_constraintEnd_toEndOf="@+id/RegisterPasswordAgain"
             app:layout_constraintTop_toBottomOf="@+id/RegisterPasswordAgain" android:layout_marginTop="12dp"
-            app:layout_constraintHorizontal_bias="0.0"/>
+    />
     <TextView
             android:text="Accounts Information"
-            android:layout_width="260dp"
-            android:layout_height="40dp" android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/textView3"
-            android:layout_marginTop="12dp" app:layout_constraintEnd_toEndOf="@+id/textView3"
+            android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="@+id/textView3"/>
     <EditText
             android:layout_width="260dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:hint="E-Mail" android:textColor="#54D0B4"
+            android:hint="E-Mail" android:textColor="@color/turquois"
             android:padding="10dp"
             android:background="#FFFFFF" android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="@+id/textView" app:layout_constraintTop_toBottomOf="@+id/textView"
-            android:layout_marginTop="4dp" app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            android:layout_marginTop="5dp"
+            android:textColorHint="@color/turquois"
             android:id="@+id/RegisterEmail"/>
     <TextView
             android:text="Create Account"
@@ -70,10 +70,10 @@
             android:textColor="#FFFFFF" android:textSize="20sp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="24dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="16dp"
             app:layout_constraintHorizontal_bias="0.498"/>
     <EditText
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/RegisterName"
@@ -81,8 +81,8 @@
             android:padding="10dp"
             android:textColor="#54D0B4" android:textSize="16sp" android:layout_width="260dp"
             app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintEnd_toEndOf="@+id/textView2" app:layout_constraintTop_toBottomOf="@+id/textView2"
-            android:textColorHint="#54D0B4"/>
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            android:textColorHint="#54D0B4" android:layout_marginTop="5dp"/>
     <TextView
             android:text="Already have an account?"
             android:layout_width="wrap_content"
@@ -94,7 +94,7 @@
     <Button
             android:text="Login"
             android:layout_width="82dp"
-            android:layout_height="38dp" android:id="@+id/RegisterLoginButton"
+            android:layout_height="48dp" android:id="@+id/RegisterLoginButton"
             android:backgroundTint="#05053D" android:textColor="#54D0B4"
             android:textSize="14sp" app:layout_constraintTop_toBottomOf="@+id/RegisterCreateAccButton"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.136"
@@ -102,14 +102,14 @@
     <Button
             android:text="Create Account"
             android:layout_width="110dp"
-            android:layout_height="45dp" android:id="@+id/RegisterCreateAccButton"
+            android:layout_height="48dp" android:id="@+id/RegisterCreateAccButton"
             android:backgroundTint="#54D0B4"
             app:layout_constraintEnd_toEndOf="@+id/RegisterBirthdate"
-            app:layout_constraintTop_toBottomOf="@+id/RegisterBirthdate" android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/RegisterBirthdate" android:layout_marginTop="5dp"
             android:layout_marginEnd="8dp" android:textSize="10sp"/>
     <EditText
             android:layout_width="260dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/RegisterSurname"
@@ -123,7 +123,7 @@
             android:textColorHint="#54D0B4"/>
     <EditText
             android:layout_width="260dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="date"
             android:ems="10"
             android:id="@+id/RegisterBirthdate"
@@ -134,7 +134,7 @@
             app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"/>
     <EditText
             android:layout_width="260dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="number"
             android:ems="10"
             android:id="@+id/RegisterIDNum"
@@ -146,7 +146,7 @@
             app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"/>
     <EditText
             android:layout_width="260dp"
-            android:layout_height="40dp"
+            android:layout_height="48dp"
             android:inputType="phone"
             android:ems="10"
             android:id="@+id/RegisterPhoneNum"

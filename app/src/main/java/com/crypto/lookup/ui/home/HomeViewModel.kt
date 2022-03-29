@@ -42,17 +42,17 @@ class HomeViewModel : ViewModel() {
                 )
             }
             _data.postValue(data)
-            loadLiveData()
+            loadLiveData(100)
         }
     }
 
-    fun loadLiveData() {
+    fun loadLiveData(limit: Int) {
         val factory: BinanceApiClientFactory = BinanceApiClientFactory.newInstance(
             "QaTHifDPd0jcU4NlNwcf8DptOykOJISTtpcLqY5AC3UiKDB3yOGNGmxuhlcmmiN9",
             "P1DENk2ufvuvYHyFbv0iu7AvWFWIYmgRkJjN9YwXr3C0WxjCzmF9KOHlnMbi4fTj"
         )
         val client: BinanceApiWebSocketClient = factory.newWebSocketClient()
-        var counter = _data.value!!.size - 1
+        var counter = limit - 1
         client.onCandlestickEvent("btcusdt", CandlestickInterval.ONE_MINUTE) {
             val data = _data.value
             if (it.barFinal) {

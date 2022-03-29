@@ -9,7 +9,7 @@
 
     <EditText
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/RegisterPassword"
@@ -22,7 +22,7 @@
             app:layout_constraintHorizontal_bias="0.0" android:textColorHint="@color/turquois"/>
     <EditText
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/RegisterPasswordAgain"
@@ -46,10 +46,11 @@
             android:layout_height="wrap_content" android:id="@+id/textView"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            tools:layout_editor_absoluteY="64dp" app:layout_constraintStart_toStartOf="@+id/RegisterEmail"/>
+            app:layout_constraintStart_toStartOf="@+id/RegisterEmail"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" android:layout_marginTop="5dp"/>
     <EditText
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
             android:hint="E-Mail" android:textColor="@color/turquois"
@@ -64,7 +65,7 @@
     <TextView
             android:text="Create Account"
             android:layout_width="0dp"
-            android:layout_height="40dp" android:id="@+id/textView3"
+            android:layout_height="wrap_content" android:id="@+id/textView3"
             android:textColor="#FFFFFF" android:textSize="20sp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +73,7 @@
             app:layout_constraintHorizontal_bias="0.498" android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"/>
     <EditText
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/RegisterName"
@@ -110,7 +111,7 @@
             android:layout_marginEnd="8dp" android:textSize="10sp"/>
     <EditText
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/RegisterSurname"
@@ -124,7 +125,7 @@
             android:textColorHint="#54D0B4"/>
     <EditText
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="date"
             android:ems="10"
             android:id="@+id/RegisterBirthdate"
@@ -135,7 +136,7 @@
             app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"/>
     <EditText
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="number"
             android:ems="10"
             android:id="@+id/RegisterIDNum"
@@ -147,7 +148,7 @@
             app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"/>
     <EditText
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:inputType="phone"
             android:ems="10"
             android:id="@+id/RegisterPhoneNum"

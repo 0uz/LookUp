@@ -37,6 +37,9 @@ class HomeFragment : Fragment() {
         candleStickChart.axisRight.isEnabled = false
         candleStickChart.setBackgroundColor(Color.GRAY)
         candleStickChart.description.isEnabled = false
+        candleStickChart.setVisibleXRangeMaximum(10f)
+        candleStickChart.setScaleMinima(5f, 1f)
+        var zoomIn = true
         homeViewModel.getData().observe(this, Observer {
             val candleDataSet = CandleDataSet(it, "BTC USDT")
             val candleData = CandleData(candleDataSet)
@@ -50,8 +53,9 @@ class HomeFragment : Fragment() {
             candleDataSet.increasingPaintStyle = Paint.Style.FILL
             candleDataSet.decreasingPaintStyle = Paint.Style.FILL
             candleStickChart.invalidate()
+            if (zoomIn) candleStickChart.moveViewToX(candleStickChart.xChartMax)
+            zoomIn = false
         })
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

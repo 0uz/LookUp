@@ -14,9 +14,11 @@ class EntryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEntryBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
 
+
         val navController = findNavController(R.id.nav_host_fragment_activity_entry)
-        supportActionBar?.hide()
+
     }
 }

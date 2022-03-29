@@ -14,11 +14,9 @@ import com.crypto.lookup.R
 import com.crypto.lookup.data.User
 import com.crypto.lookup.data.UserFirebaseDaoImpl
 import com.crypto.lookup.data.UserService
-import com.crypto.lookup.data.onGetDataListener
+import com.crypto.lookup.data.listeners.onGetDataListener
 import com.crypto.lookup.databinding.FragmentLoginBinding
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -26,7 +24,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val db = UserService(UserFirebaseDaoImpl())
-    private val db2 = Firebase.firestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,9 +48,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             startActivity(intent)
         }
 
+
         binding.LoginRegisterButton.setOnClickListener {
             navController.navigate(R.id.action_loginFragment_to_registerFragment)
-//            val user = User("Test","Test",1L,1L,"test","test")
             db.retrieve("test", object : onGetDataListener {
                 override fun onSuccess(data: DocumentSnapshot) {
                     println(data.toObject(User::class.java))
@@ -63,16 +60,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     println("error")
                 }
             })
-
-
-
-            db2.collection("users").document("test").get().addOnSuccessListener {
-
-            }.addOnFailureListener {
-
-
-            }
-
 
         }
 

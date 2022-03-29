@@ -9,5 +9,6 @@ data class User(
     val phoneNumber: Long = 0L,
     val birthDate: Timestamp? = null,
     val email: String = "",
-    val password: String = ""
+    val password: String = "",
+    val phoneID: String = ""
 )

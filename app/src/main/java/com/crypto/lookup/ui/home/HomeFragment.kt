@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -53,6 +54,8 @@ class HomeFragment : Fragment() {
             candleDataSet.increasingPaintStyle = Paint.Style.FILL
             candleDataSet.decreasingPaintStyle = Paint.Style.FILL
             candleStickChart.invalidate()
+            binding.homePB.isVisible = false
+            binding.candleStickChart.isVisible = true
             if (zoomIn) candleStickChart.moveViewToX(candleStickChart.xChartMax)
             zoomIn = false
         })

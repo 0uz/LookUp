@@ -8,10 +8,15 @@ import kotlinx.android.synthetic.main.coin_price_recycler_row.view.*
 
 
 
-class CoinPriceAdapter(val coinNameList: ArrayList<String>, val coinPriceList : ArrayList<Double>) : RecyclerView.Adapter<CoinPriceAdapter.CoinsWH>() {
+class CoinPriceAdapter() : RecyclerView.Adapter<CoinPriceAdapter.CoinsWH>() {
+    var coinList = ArrayList<Coin>()
 
     class CoinsWH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+    }
+
+    fun setDataList(data: ArrayList<Coin>) {
+        this.coinList = data
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinsWH {
@@ -20,13 +25,13 @@ class CoinPriceAdapter(val coinNameList: ArrayList<String>, val coinPriceList : 
     }
 
     override fun getItemCount(): Int {
-        return coinNameList.size
+        return coinList.size
     }
 
     override fun onBindViewHolder(holder: CoinsWH, position: Int) {
 
-        holder.itemView.coinTextView.text=coinNameList.get(position)
-        holder.itemView.priceTextView.text= coinPriceList.get(position).toString()
+        holder.itemView.coinTextView.text = coinList.get(position).name
+        holder.itemView.priceTextView.text = coinList.get(position).price.toString()
 
     }
 }

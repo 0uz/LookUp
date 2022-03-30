@@ -4,21 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.crypto.lookup.R
 import com.crypto.lookup.databinding.FragmentDashboardBinding
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
     private var _binding: FragmentDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -39,22 +35,17 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var coinNameList= ArrayList<String>()
-        coinNameList.add("BTC")
-
-
-        var coinPriceList= ArrayList<Double>()
-        coinPriceList.add(47167.0)
-
-
-
-
         val layoutManager = LinearLayoutManager(context)
-        CoinPriceAdapter.layoutManager = layoutManager
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = dashboardViewModel.coinPriceAdapter
 
 
-        val adapter = CoinPriceAdapter(coinNameList,coinPriceList)
-        CoinPriceAdapter.adapter = adapter
+        dashboardViewModel.coinListData.observe(this, Observer {
+            dashboardViewModel.setAdapterData(it.coins)
+        })
+
+
+        dashboardViewModel.test()
 
 
     }

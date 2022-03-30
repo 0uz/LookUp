@@ -1,13 +1,25 @@
 package com.crypto.lookup.ui.dashboard
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class DashboardViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    lateinit var coinListData: MutableLiveData<CoinList>
+    lateinit var coinPriceAdapter: CoinPriceAdapter
+
+    init {
+        coinListData = MutableLiveData()
+        coinPriceAdapter = CoinPriceAdapter()
     }
-    val text: LiveData<String> = _text
+
+    fun setAdapterData(data: ArrayList<Coin>) {
+        coinPriceAdapter.setDataList(data)
+        coinPriceAdapter.notifyDataSetChanged()
+    }
+
+    fun test() {
+        val x = CoinList(arrayListOf(Coin("BTC", 123F)))
+        coinListData.postValue(x)
+    }
 }

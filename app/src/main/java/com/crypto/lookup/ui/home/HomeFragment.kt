@@ -36,10 +36,11 @@ class HomeFragment : Fragment() {
         val candleStickChart: CandleStickChart = binding.candleStickChart
         candleStickChart.cameraDistance = 100F
         candleStickChart.axisRight.isEnabled = false
-        candleStickChart.setBackgroundColor(Color.GRAY)
+        candleStickChart.setBackgroundColor(Color.parseColor("#05053D"))
         candleStickChart.description.isEnabled = false
-        candleStickChart.setVisibleXRangeMaximum(10f)
-        candleStickChart.setScaleMinima(5f, 1f)
+        candleStickChart.legend.textColor = Color.WHITE
+        candleStickChart.xAxis.textColor = Color.WHITE
+        candleStickChart.axisLeft.textColor = Color.WHITE
         var zoomIn = true
         homeViewModel.getData().observe(this, Observer {
             val candleDataSet = CandleDataSet(it, "BTC USDT")
@@ -53,6 +54,8 @@ class HomeFragment : Fragment() {
             candleDataSet.neutralColor = Color.BLUE
             candleDataSet.increasingPaintStyle = Paint.Style.FILL
             candleDataSet.decreasingPaintStyle = Paint.Style.FILL
+            candleDataSet.valueTextColor = Color.WHITE
+            candleDataSet.valueTextSize = 9F
             candleStickChart.invalidate()
             binding.homePB.isVisible = false
             binding.candleStickChart.isVisible = true

@@ -7,6 +7,20 @@
         android:layout_height="match_parent"
         tools:context=".ui.dashboard.DashboardFragment" android:background="@color/mainScreenColor">
 
+    <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp" app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" android:id="@+id/scrolviewDashview"
+            android:visibility="gone">
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:background="#1A1A45"
+                android:id="@+id/recyclerView"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp" android:visibility="visible" android:layout_marginTop="10dp"
+        />
+    </ScrollView>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
@@ -31,14 +45,6 @@
                 android:layout_margin="10dp"
                 android:gravity="right"/>
     </LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="410dp"
-            app:layout_constraintStart_toStartOf="parent"
-            android:background="#1A1A45" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" android:id="@+id/recyclerView"
-            android:layout_height="530dp"
-            android:layout_marginBottom="4dp" android:visibility="gone"/>
     <TextView
             android:text="Prices"
             android:layout_width="wrap_content"

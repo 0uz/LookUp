@@ -44,7 +44,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.coinListData.observe(this, Observer {
             dashboardViewModel.setAdapterData(it.coins)
             binding.dashboardPB.isVisible = false
-            binding.recyclerView.isVisible = true
+            binding.scrolviewDashview.isVisible = true
         })
 
     }

@@ -45,7 +45,7 @@ class DashboardFragment : Fragment() {
         })
 
 
-        dashboardViewModel.test()
+//        dashboardViewModel.test()
 
 
     }

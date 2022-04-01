@@ -63,8 +63,8 @@ class RegisterFragment : Fragment() {
             isEnable[2] = Validation.isTextValid(it.toString(), 10, 4)
         }
         binding.passwordAgain.addTextChangedListener {
-            isEnable[3] = Validation.isTextValid(it.toString(), 10, 4) && binding.password.text.toString()
-                .equals(it.toString())
+            isEnable[3] =
+                Validation.isTextValid(it.toString(), 10, 4) && binding.password.text.toString() == it.toString()
         }
         binding.identityNumber.addTextChangedListener {
             isEnable[4] = Validation.isTextValid(it.toString(), 11, 2) // TODO min 11
@@ -77,8 +77,7 @@ class RegisterFragment : Fragment() {
         val date = object : DatePickerDialog.OnDateSetListener {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onDateSet(
-                view: DatePicker, year: Int, monthOfYear: Int,
-                dayOfMonth: Int
+                view: DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int
             ) {
                 birthdate.set(Calendar.YEAR, year)
                 birthdate.set(Calendar.YEAR, year)
@@ -90,7 +89,8 @@ class RegisterFragment : Fragment() {
 
         binding.RegisterBirthdate.setOnClickListener {
             DatePickerDialog(
-                context!!, date,
+                context!!,
+                date,
                 birthdate.get(Calendar.YEAR),
                 birthdate.get(Calendar.MONTH),
                 birthdate.get(Calendar.DAY_OF_MONTH)
@@ -112,7 +112,16 @@ class RegisterFragment : Fragment() {
                     )
                     db.save(user, object : onSaveDataListener {
                         override fun onSuccess() {
-                            navController.popBackStack()
+                            db.createAuth(user, binding.password.text.toString(), object : onSaveDataListener {
+                                override fun onSuccess() {
+                                    navController.popBackStack()
+                                }
+
+                                override fun onFailed() {
+
+                                }
+
+                            })
                         }
 
                         override fun onFailed() {

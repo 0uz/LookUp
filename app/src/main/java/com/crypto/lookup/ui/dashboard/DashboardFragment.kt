@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView.OnQueryTextListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -38,13 +39,25 @@ class DashboardFragment : Fragment() {
 
         val layoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = dashboardViewModel.coinPriceAdapter
+        recyclerView.adapter = dashboardViewModel.addCoinPriceAdapter
 
 
         dashboardViewModel.coinListData.observe(this, Observer {
             dashboardViewModel.setAdapterData(it.coins)
             binding.dashboardPB.isVisible = false
             binding.scrolviewDashview.isVisible = true
+        })
+
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                dashboardViewModel.addCoinPriceAdapter.filter.filter(query)
+                return false
+            }
+
         })
 
     }

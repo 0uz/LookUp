@@ -92,23 +92,24 @@
             app:layout_constraintTop_toTopOf="@+id/RegisterLoginButton"
             app:layout_constraintBottom_toBottomOf="@+id/RegisterLoginButton"
             android:layout_marginEnd="8dp" app:layout_constraintVertical_bias="0.473"
-            app:layout_constraintStart_toStartOf="@+id/RegisterBirthdate" app:layout_constraintHorizontal_bias="0.0"/>
+    />
     <Button
             android:text="Login"
             android:layout_width="82dp"
             android:layout_height="48dp" android:id="@+id/RegisterLoginButton"
-            android:backgroundTint="#05053D" android:textColor="#54D0B4"
+            android:textColor="#54D0B4"
             android:textSize="14sp" app:layout_constraintTop_toBottomOf="@+id/RegisterCreateAccButton"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintVertical_bias="0.136"
-            app:layout_constraintEnd_toEndOf="@+id/RegisterCreateAccButton" android:onClick="loginView"/>
+            app:layout_constraintEnd_toEndOf="@+id/RegisterCreateAccButton" android:onClick="loginView"
+            android:backgroundTint="@color/white"/>
     <Button
             android:text="Create Account"
             android:layout_width="110dp"
             android:layout_height="48dp" android:id="@+id/RegisterCreateAccButton"
             android:backgroundTint="#54D0B4"
-            app:layout_constraintEnd_toEndOf="@+id/RegisterBirthdate"
-            app:layout_constraintTop_toBottomOf="@+id/RegisterBirthdate" android:layout_marginTop="5dp"
-            android:layout_marginEnd="8dp" android:textSize="10sp"/>
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/RegisterBirthdate" android:layout_marginTop="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/RegisterBirthdate"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -123,17 +124,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toBottomOf="@+id/RegisterName" android:layout_marginTop="12dp"
             android:textColorHint="#54D0B4"/>
-    <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="date"
-            android:ems="10"
-            android:id="@+id/RegisterBirthdate"
-            android:hint="Birthdate" android:padding="10dp" android:background="#FFFFFF" android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@+id/RegisterPhoneNum"
-            app:layout_constraintEnd_toEndOf="@+id/RegisterPhoneNum"
-            app:layout_constraintTop_toBottomOf="@+id/RegisterPhoneNum" android:layout_marginTop="12dp"
-            app:layout_constraintHorizontal_bias="0.0" android:textColorHint="#54D0B4"/>
     <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -157,4 +147,13 @@
             app:layout_constraintStart_toStartOf="@+id/RegisterIDNum" app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintTop_toBottomOf="@+id/RegisterIDNum" android:layout_marginTop="12dp"
             android:textColorHint="#54D0B4"/>
+    <Button
+            android:text="Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/RegisterBirthdate"
+            app:layout_constraintEnd_toEndOf="@+id/RegisterPhoneNum"
+            app:layout_constraintStart_toStartOf="@+id/RegisterPhoneNum"
+            app:layout_constraintTop_toBottomOf="@+id/RegisterPhoneNum" android:layout_marginTop="5dp"
+            android:textColor="@color/turquois"
+            android:backgroundTint="@color/white" android:gravity="center|left"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

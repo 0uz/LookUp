@@ -44,6 +44,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val navController = findNavController()
         binding.LoginLoginButton.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
+
             this.activity!!.finish()
             startActivity(intent)
         }

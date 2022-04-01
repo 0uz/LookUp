@@ -9,6 +9,6 @@ data class User(
     val phoneNumber: Long = 0L,
     val birthDate: Timestamp? = null,
     val email: String = "",
-    val password: String = "",
-    val phoneID: String = ""
+    val phoneID: String = "",
+    val selectedCoins: List<String> = emptyList()
 )

@@ -4,23 +4,29 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binance.api.client.BinanceApiClientFactory
 import com.binance.api.client.BinanceApiRestClient
+import com.crypto.lookup.data.User
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class DashboardViewModel : ViewModel() {
 
     lateinit var coinListData: MutableLiveData<CoinList>
-    lateinit var coinPriceAdapter: CoinPriceAdapter
+    lateinit var addCoinPriceAdapter: AddCoinPriceAdapter
+    lateinit var currentUser: User
 
     init {
         coinListData = MutableLiveData()
-        coinPriceAdapter = CoinPriceAdapter()
         test()
     }
 
+    fun setCurUser(user: User) {
+        currentUser = user
+        addCoinPriceAdapter = AddCoinPriceAdapter(currentUser)
+    }
+
     fun setAdapterData(data: ArrayList<Coin>) {
-        coinPriceAdapter.setDataList(data)
-        coinPriceAdapter.notifyDataSetChanged()
+        addCoinPriceAdapter.setDataList(data)
+        addCoinPriceAdapter.notifyDataSetChanged()
     }
 
     fun test() {

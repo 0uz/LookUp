@@ -19,6 +19,7 @@
     <string name="test_personal_info">Personal Information</string>
     <string name="text_account_info">Account Information</string>
     <string name="text_create_account">Create Account</string>
+    <string name="button_register">Register</string>
     <!-- Strings used for fragments for navigation -->
 
 

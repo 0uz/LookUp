@@ -134,6 +134,10 @@ class RegisterFragment : Fragment() {
                 Toast.makeText(context, "degildir", 100).show()
             }
         }
+
+        binding.RegisterLoginButton.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 
 }

@@ -11,8 +11,9 @@ class UserFirebaseDaoImpl : UserDao {
 
     override fun save(user: User, listener: onSaveDataListener) {
         db.collection("users").document(user.email).set(user).addOnSuccessListener {
-        }.addOnFailureListener {
             listener.onSuccess()
+        }.addOnFailureListener {
+            listener.onFailed()
         }
     }
 

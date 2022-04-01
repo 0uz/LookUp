@@ -5,6 +5,20 @@
     <string name="title_notifications">Notifications</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_entry">EntryActivity</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_password_again">Password Again</string>
+    <string name="hint_surname">Surname</string>
+    <string name="hint_identity_number">Identity Number</string>
+    <string name="hint_phone_number">Phone Number</string>
+    <string name="button_birthday">Birthday</string>
+    <string name="button_create_account">Create Account</string>
+    <string name="button_login">Login</string>
+    <string name="text_already">Already have an account?</string>
+    <string name="test_personal_info">Personal Information</string>
+    <string name="text_account_info">Account Information</string>
+    <string name="text_create_account">Create Account</string>
     <!-- Strings used for fragments for navigation -->
 
 

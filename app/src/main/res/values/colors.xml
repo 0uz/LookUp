@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="turquois">#54D0B4</color>
     <color name="mainScreenColor">#05053D</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
 </resources>

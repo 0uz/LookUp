@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         val x = LookUpFirebaseMessagingService()
-        x.registerToken()
 
 
     }

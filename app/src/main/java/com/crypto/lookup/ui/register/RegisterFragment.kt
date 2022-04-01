@@ -47,23 +47,29 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
         var isEnable = arrayListOf<Boolean>(false, false, false, false, false, false, false)
-        binding.RegisterEmail.addTextChangedListener {
-            isEnable[0] = Validation.isEmailValid(it.toString())
+
+
+        binding.email.addTextChangedListener {
+            if (Validation.isEmailValid(it.toString())) {
+                isEnable[0] = Validation.isEmailValid(it.toString())
+            } else {
+
+            }
         }
-        binding.RegisterName.addTextChangedListener {
+        binding.name.addTextChangedListener {
             isEnable[1] = Validation.isTextValid(it.toString(), 10, 2)
         }
-        binding.RegisterPassword.addTextChangedListener {
+        binding.password.addTextChangedListener {
             isEnable[2] = Validation.isTextValid(it.toString(), 10, 4)
         }
-        binding.RegisterPasswordAgain.addTextChangedListener {
-            isEnable[3] = Validation.isTextValid(it.toString(), 10, 4) && binding.RegisterPassword.text.toString()
+        binding.passwordAgain.addTextChangedListener {
+            isEnable[3] = Validation.isTextValid(it.toString(), 10, 4) && binding.password.text.toString()
                 .equals(it.toString())
         }
-        binding.RegisterIDNum.addTextChangedListener {
+        binding.identityNumber.addTextChangedListener {
             isEnable[4] = Validation.isTextValid(it.toString(), 11, 2) // TODO min 11
         }
-        binding.RegisterPhoneNum.addTextChangedListener {
+        binding.phoneNo.addTextChangedListener {
             isEnable[5] = Validation.isTextValid(it.toString(), 10, 2) // TODO min and phone regex
         }
 
@@ -96,22 +102,20 @@ class RegisterFragment : Fragment() {
             if (isEnable.stream().allMatch { it.equals(true) }) {
                 FirebaseMessaging.getInstance().token.addOnSuccessListener {
                     val user = User(
-                        binding.RegisterName.text.toString(),
-                        binding.RegisterSurname.text.toString(),
-                        binding.RegisterIDNum.text.toString().toLong(),
-                        binding.RegisterPhoneNum.text.toString().toLong(),
+                        binding.name.text.toString(),
+                        binding.surname.text.toString(),
+                        binding.identityNumber.text.toString().toLong(),
+                        binding.phoneNo.text.toString().toLong(),
                         Timestamp(birthdate.timeInMillis),
-                        binding.RegisterEmail.text.toString(),
+                        binding.email.text.toString(),
                         it
                     )
                     db.save(user, object : onSaveDataListener {
                         override fun onSuccess() {
-                            println("Basarili")
                             navController.popBackStack()
                         }
 
                         override fun onFailed() {
-                            println("degil")
                         }
 
                     })

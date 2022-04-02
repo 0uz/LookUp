@@ -4,17 +4,20 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.crypto.lookup.data.User
 import com.crypto.lookup.databinding.ActivityMainBinding
-import com.crypto.lookup.service.LookUpFirebaseMessagingService
+import com.crypto.lookup.ui.login.UserViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var sharedViewModel: UserViewModel
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +42,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        val x = LookUpFirebaseMessagingService()
+        sharedViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        val user = intent?.extras?.getSerializable("user")
+        sharedViewModel.setCurrentUser(user as User)
 
 
     }

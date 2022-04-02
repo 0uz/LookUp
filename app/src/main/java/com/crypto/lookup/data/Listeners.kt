@@ -9,5 +9,5 @@ interface onGetDataListener {
 
 interface onSaveDataListener {
     fun onSuccess()
-    fun onFailed()
+    fun onFailed(exception: Exception)
 }

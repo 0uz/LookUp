@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.crypto.lookup.MainActivity
 import com.crypto.lookup.R
@@ -21,6 +22,8 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var sharedViewModel: UserViewModel
+
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
     private val db = UserService(UserFirebaseDaoImpl())
@@ -34,6 +37,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
         val root: View = binding.root
         return root
     }
@@ -43,18 +47,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
         binding.LoginLoginButton.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
-
-            this.activity!!.finish()
-            startActivity(intent)
-        }
-
-
-        binding.LoginRegisterButton.setOnClickListener {
-            navController.navigate(R.id.action_loginFragment_to_registerFragment)
-            db.retrieve("test", object : onGetDataListener {
+            db.retrieve(binding.loginEmail.text.toString(), object : onGetDataListener {
                 override fun onSuccess(data: DocumentSnapshot) {
-                    println(data.toObject(User::class.java))
+                    println(binding.loginEmail.text.toString())
+                    val user = data.toObject(User::class.java)!!
+                    val intent = Intent(activity, MainActivity::class.java)
+                    val bundle = Bundle()
+                    bundle.putSerializable("user", user)
+                    intent.putExtras(bundle)
+                    startActivity(intent)
+                    activity!!.finish()
                 }
 
                 override fun onFailed(e: Exception) {
@@ -62,6 +64,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 }
             })
 
+        }
+
+
+        binding.LoginRegisterButton.setOnClickListener {
+            navController.navigate(R.id.action_loginFragment_to_registerFragment)
         }
 
         binding.LoginForgotPassword.setOnClickListener {

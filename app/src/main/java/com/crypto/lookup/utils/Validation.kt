@@ -14,6 +14,11 @@ class Validation {
             else Patterns.EMAIL_ADDRESS.matcher(email).matches()
         }
 
+        fun isPhoneValid(phone: String): Boolean {
+            return if (phone.isNullOrEmpty()) false
+            else Patterns.PHONE.matcher(phone).matches()
+        }
+
         fun isTextValid(text: String, max: Int, min: Int): Boolean {
             return !(text.isNullOrEmpty() || text.length > max || text.length < min)
         }

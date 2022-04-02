@@ -20,6 +20,15 @@
     <string name="text_account_info">Account Information</string>
     <string name="text_create_account">Create Account</string>
     <string name="button_register">Register</string>
+    <string name="phone_Error">Phone number must be valid</string>
+    <string name="identity_number_valid">Identity number must be 11 character</string>
+    <string name="password_equal">Password does not match</string>
+    <string name="password_valid">Password lengt must be 6 characters</string>
+    <string name="name_valid">Name must be at least 2 character</string>
+    <string name="email_valid">Email must be valid</string>
+    <string name="register_succesfull">Register Successfull</string>
+    <string name="register_failed">Register Failed</string>
+    <string name="user_exist">User is already exist</string>
     <!-- Strings used for fragments for navigation -->
 
 

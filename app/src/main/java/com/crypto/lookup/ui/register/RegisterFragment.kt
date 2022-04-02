@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.crypto.lookup.R
 import com.crypto.lookup.data.User
 import com.crypto.lookup.data.UserFirebaseDaoImpl
 import com.crypto.lookup.data.UserService
@@ -19,7 +21,7 @@ import com.crypto.lookup.data.listeners.onSaveDataListener
 import com.crypto.lookup.databinding.FragmentRegisterBinding
 import com.crypto.lookup.utils.Common
 import com.crypto.lookup.utils.Validation
-import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import java.sql.Timestamp
 import java.util.*
 
@@ -28,6 +30,7 @@ class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     private val db = UserService(UserFirebaseDaoImpl())
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,34 +48,71 @@ class RegisterFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val navController = findNavController()
+        navController = findNavController()
+        setValidationListeners()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun setValidationListeners() {
         var isEnable = arrayListOf<Boolean>(false, false, false, false, false, false, false)
-
-
         binding.email.addTextChangedListener {
-            if (Validation.isEmailValid(it.toString())) {
-                isEnable[0] = Validation.isEmailValid(it.toString())
+            val emailValid = Validation.isEmailValid(it.toString())
+            if (emailValid) {
+                isEnable[0] = emailValid
+                binding.emailTil.isErrorEnabled = false
             } else {
-
+                binding.emailTil.error = getString(R.string.email_valid)
             }
         }
+
         binding.name.addTextChangedListener {
-            isEnable[1] = Validation.isTextValid(it.toString(), 10, 2)
-        }
-        binding.password.addTextChangedListener {
-            isEnable[2] = Validation.isTextValid(it.toString(), 10, 4)
-        }
-        binding.passwordAgain.addTextChangedListener {
-            isEnable[3] =
-                Validation.isTextValid(it.toString(), 10, 4) && binding.password.text.toString() == it.toString()
-        }
-        binding.identityNumber.addTextChangedListener {
-            isEnable[4] = Validation.isTextValid(it.toString(), 11, 2) // TODO min 11
-        }
-        binding.phoneNo.addTextChangedListener {
-            isEnable[5] = Validation.isTextValid(it.toString(), 10, 2) // TODO min and phone regex
+            val nameValid = Validation.isTextValid(it.toString(), 10, 2)
+            if (nameValid) {
+                isEnable[1] = nameValid
+                binding.nameTil.isErrorEnabled = false
+            } else {
+                binding.nameTil.error = getString(R.string.name_valid)
+            }
         }
 
+        binding.password.addTextChangedListener {
+            val passwordValid = Validation.isTextValid(it.toString(), 10, 6)
+            if (passwordValid) {
+                isEnable[2] = passwordValid
+                binding.passwordTil.isErrorEnabled = false
+            } else {
+                binding.passwordTil.error = getString(R.string.password_valid)
+            }
+        }
+
+        binding.passwordAgain.addTextChangedListener {
+            val passwordAgainValid = Validation.isTextValid(it.toString(), 10, 6)
+            val passwordEqual = binding.password.text.toString() == it.toString()
+            if (!passwordAgainValid) binding.passwordAgainTil.error = getString(R.string.password_valid)
+            if (!passwordEqual) binding.passwordAgainTil.error = getString(R.string.password_equal)
+            if (passwordAgainValid && passwordEqual) binding.passwordAgainTil.isErrorEnabled = false
+            isEnable[3] = passwordAgainValid && passwordEqual
+        }
+
+        binding.identityNumber.addTextChangedListener {
+            val identityNumberValid = Validation.isTextValid(it.toString(), 11, 11)
+            if (identityNumberValid) {
+                isEnable[4] = identityNumberValid
+                binding.identityNumberTil.isErrorEnabled = false
+            } else {
+                binding.identityNumberTil.error = getString(R.string.identity_number_valid)
+            }
+        }
+
+        binding.phoneNo.addTextChangedListener {
+            val phoneValid = Validation.isPhoneValid(it.toString())
+            if (phoneValid) {
+                isEnable[5] = phoneValid
+                binding.phoneNoTil.isErrorEnabled = false
+            } else {
+                binding.phoneNoTil.error = getString(R.string.phone_Error)
+            }
+        }
         val birthdate = Calendar.getInstance()
         val date = object : DatePickerDialog.OnDateSetListener {
             @RequiresApi(Build.VERSION_CODES.O)
@@ -100,44 +140,35 @@ class RegisterFragment : Fragment() {
         binding.RegisterCreateAccButton.setOnClickListener {
             isEnable[6] = Validation.isBirthdateValid(birthdate)
             if (isEnable.stream().allMatch { it.equals(true) }) {
-                FirebaseMessaging.getInstance().token.addOnSuccessListener {
-                    val user = User(
-                        binding.name.text.toString(),
-                        binding.surname.text.toString(),
-                        binding.identityNumber.text.toString().toLong(),
-                        binding.phoneNo.text.toString().toLong(),
-                        Timestamp(birthdate.timeInMillis),
-                        binding.email.text.toString(),
-                        it
-                    )
-                    db.save(user, object : onSaveDataListener {
-                        override fun onSuccess() {
-                            db.createAuth(user, binding.password.text.toString(), object : onSaveDataListener {
-                                override fun onSuccess() {
-                                    navController.popBackStack()
-                                }
+                val user = User(
+                    binding.name.text.toString(),
+                    binding.surname.text.toString(),
+                    binding.identityNumber.text.toString().toLong(),
+                    binding.phoneNo.text.toString().toLong(),
+                    Timestamp(birthdate.timeInMillis),
+                    binding.email.text.toString()
+                )
+                db.save(user, binding.password.text.toString(), object : onSaveDataListener {
+                    override fun onSuccess() {
+                        Toast.makeText(context, getString(R.string.register_succesfull), Toast.LENGTH_LONG).show()
+                        navController.popBackStack()
+                    }
 
-                                override fun onFailed() {
-
-                                }
-
-                            })
+                    override fun onFailed(exception: Exception) {
+                        if (exception.javaClass.equals(FirebaseAuthUserCollisionException::class.java)) {
+                            Toast.makeText(context, getString(R.string.user_exist), Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(context, getString(R.string.register_failed), Toast.LENGTH_LONG).show()
                         }
+                    }
 
-                        override fun onFailed() {
-                        }
-
-                    })
-                }
-
-            } else {
-                Toast.makeText(context, "degildir", 100).show()
+                })
             }
         }
-
         binding.RegisterLoginButton.setOnClickListener {
             navController.popBackStack()
         }
     }
+
 
 }

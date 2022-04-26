@@ -11,21 +11,21 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 class UserFirebaseDaoImpl : UserDao {
 
-    private val db = Firebase.firestore
+    private val db = Firebase.firestore.collection("users")
     private val auth = FirebaseAuth.getInstance()
     private val messaging = FirebaseMessaging.getInstance()
 
     override fun save(user: User, password: String, listener: onSaveDataListener) {
         messaging.token.addOnSuccessListener { phoneID ->
             user.phoneID = phoneID
-            db.collection("users").document(user.email).set(user).addOnSuccessListener {
+            db.document(user.email).set(user).addOnSuccessListener {
                 createAuth(user, password, object : onSaveDataListener {
                     override fun onSuccess() {
                         listener.onSuccess()
                     }
 
                     override fun onFailed(exception: Exception) {
-                        db.collection("users").document(user.email).delete()
+                        db.document(user.email).delete()
                         listener.onFailed(exception)
                     }
                 })
@@ -49,7 +49,7 @@ class UserFirebaseDaoImpl : UserDao {
     }
 
     override fun retrieve(email: String, listener: onGetDataListener) {
-        db.collection("users").document(email).get().addOnSuccessListener {
+        db.document(email).get().addOnSuccessListener {
             listener.onSuccess(it)
         }.addOnFailureListener {
             listener.onFailed(it)

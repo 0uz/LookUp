@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -17,6 +18,7 @@ import com.crypto.lookup.data.UserFirebaseDaoImpl
 import com.crypto.lookup.data.UserService
 import com.crypto.lookup.data.listeners.onGetDataListener
 import com.crypto.lookup.databinding.FragmentLoginBinding
+import com.crypto.lookup.utils.Validation
 import com.google.firebase.firestore.DocumentSnapshot
 
 
@@ -46,24 +48,30 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val navController = findNavController()
+
+        // TODO TEST DATA REMOVE THEM
+        binding.loginEmail.setText("test@test.com")
+        binding.loginPassword.setText("123456")
+
+        binding.loginEmail.addTextChangedListener {
+            if (Validation.isEmailValid(it.toString())) {
+                binding.loginEmailTil.isErrorEnabled = false
+            } else {
+                binding.loginEmailTil.error = getString(R.string.email_valid)
+            }
+        }
+        binding.loginPassword.addTextChangedListener {
+            if (Validation.isTextValid(it.toString(), 10, 6)) {
+                binding.loginPasswordTil.isErrorEnabled = false
+            } else {
+                binding.loginPasswordTil.error = getString(R.string.password_valid)
+            }
+        }
+
         binding.LoginLoginButton.setOnClickListener {
-            db.retrieve(binding.loginEmail.text.toString(), object : onGetDataListener {
-                override fun onSuccess(data: DocumentSnapshot) {
-                    println(binding.loginEmail.text.toString())
-                    val user = data.toObject(User::class.java)!!
-                    val intent = Intent(activity, MainActivity::class.java)
-                    val bundle = Bundle()
-                    bundle.putSerializable("user", user)
-                    intent.putExtras(bundle)
-                    startActivity(intent)
-                    activity!!.finish()
-                }
-
-                override fun onFailed(e: Exception) {
-                    println("error")
-                }
-            })
-
+            if (!binding.loginEmailTil.isErrorEnabled || binding.loginPasswordTil.isErrorEnabled) {
+                Login()
+            }
         }
 
 
@@ -74,6 +82,25 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.LoginForgotPassword.setOnClickListener {
             navController.navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
         }
+    }
+
+    private fun Login() {
+        db.retrieve(binding.loginEmail.text.toString(), object : onGetDataListener {
+            override fun onSuccess(data: DocumentSnapshot) {
+                println(binding.loginEmail.text.toString())
+                val user = data.toObject(User::class.java)!!
+                val intent = Intent(activity, MainActivity::class.java)
+                val bundle = Bundle()
+                bundle.putSerializable("user", user)
+                intent.putExtras(bundle)
+                startActivity(intent)
+                activity!!.finish()
+            }
+
+            override fun onFailed(e: Exception) {
+                println("error")
+            }
+        })
     }
 
 }

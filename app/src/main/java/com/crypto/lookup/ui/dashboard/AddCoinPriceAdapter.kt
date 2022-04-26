@@ -7,17 +7,13 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
-import com.crypto.lookup.data.User
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.add_coin_price_recycler_row.view.*
+import kotlinx.android.synthetic.main.dashboard_coin_recycler_row.view.*
 import java.util.*
 
 
-class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
+class AddCoinPriceAdapter() : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
     var coinList = ArrayList<Coin>()
     var coinFilterList = ArrayList<Coin>()
-    var firebaseInstance = Firebase.firestore.collection("users").document(user.email)
 
 
     class CoinsWH(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,7 +26,7 @@ class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAda
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinsWH {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.add_coin_price_recycler_row, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.dashboard_coin_recycler_row, parent, false)
         return CoinsWH(itemView)
     }
 
@@ -40,10 +36,10 @@ class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAda
 
     override fun onBindViewHolder(holder: CoinsWH, position: Int) {
 
-        holder.itemView.coinTextView.text = coinList.get(position).name
-        holder.itemView.priceTextView.text = coinList.get(position).price.toString()
-        holder.itemView.addButton.setOnClickListener {
-
+        holder.itemView.coinTextView.text = coinFilterList.get(position).name
+        holder.itemView.priceTextView.text = coinFilterList.get(position).price.toString()
+        holder.itemView.dashboardButton.text = "Subscribe"
+        holder.itemView.dashboardButton.setOnClickListener {
         }
 
     }

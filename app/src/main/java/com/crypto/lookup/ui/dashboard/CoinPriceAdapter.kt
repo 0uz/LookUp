@@ -6,7 +6,7 @@ import android.widget.Filter
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
-import kotlinx.android.synthetic.main.add_coin_price_recycler_row.view.*
+import kotlinx.android.synthetic.main.dashboard_coin_recycler_row.view.*
 import java.util.*
 
 
@@ -25,7 +25,7 @@ class CoinPriceAdapter() : RecyclerView.Adapter<CoinPriceAdapter.CoinsWH>(), Fil
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CoinsWH {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.add_coin_price_recycler_row, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.dashboard_coin_recycler_row, parent, false)
         return CoinsWH(itemView)
     }
 

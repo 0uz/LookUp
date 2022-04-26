@@ -11,5 +11,5 @@ data class User(
     val birthDate: Date? = null,
     val email: String = "",
     var phoneID: String = "",
-    val selectedCoins: List<String> = emptyList()
+    val subscribedCoins: List<String> = emptyList()
 ) : Serializable

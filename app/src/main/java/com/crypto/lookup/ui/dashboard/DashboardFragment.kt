@@ -11,11 +11,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crypto.lookup.databinding.FragmentDashboardBinding
+import com.crypto.lookup.ui.login.UserViewModel
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
+    private lateinit var sharedViewModel: UserViewModel
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
 
@@ -24,9 +26,9 @@ class DashboardFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        sharedViewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
         dashboardViewModel =
             ViewModelProvider(this).get(DashboardViewModel::class.java)
-
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -36,14 +38,16 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        dashboardViewModel.setCurUser(sharedViewModel.getCurrentUser())
         val layoutManager = LinearLayoutManager(context)
-        recyclerView.layoutManager = layoutManager
-        recyclerView.adapter = dashboardViewModel.addCoinPriceAdapter
+        recyclerViewCoins.layoutManager = layoutManager
+        recyclerViewCoins.adapter = dashboardViewModel.addCoinPriceAdapter
+
 
 
         dashboardViewModel.coinListData.observe(this, Observer {
             dashboardViewModel.setAdapterData(it.coins)
+//            dashboardViewModel.setSubscribedCoinsData() TODO
             binding.dashboardPB.isVisible = false
             binding.scrolviewDashview.isVisible = true
         })

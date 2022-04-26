@@ -1,19 +1,26 @@
 package com.crypto.lookup.ui.dashboard
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
+import com.crypto.lookup.data.User
+import com.crypto.lookup.data.UserFirebaseDaoImpl
+import com.crypto.lookup.data.UserService
+import com.crypto.lookup.data.listeners.onSaveDataListener
 import kotlinx.android.synthetic.main.dashboard_coin_recycler_row.view.*
 import java.util.*
 
 
-class AddCoinPriceAdapter() : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
+class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
     var coinList = ArrayList<Coin>()
     var coinFilterList = ArrayList<Coin>()
+    var userService: UserService = UserService(UserFirebaseDaoImpl())
 
 
     class CoinsWH(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -40,6 +47,18 @@ class AddCoinPriceAdapter() : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(
         holder.itemView.priceTextView.text = coinFilterList.get(position).price.toString()
         holder.itemView.dashboardButton.text = "Subscribe"
         holder.itemView.dashboardButton.setOnClickListener {
+            userService.subscribeCoin(user.email, coinFilterList.get(position).name, object : onSaveDataListener {
+                @RequiresApi(Build.VERSION_CODES.N)
+                override fun onSuccess() {
+                    coinList.remove(coinList.get(position))
+                    notifyDataSetChanged()
+                }
+
+                override fun onFailed(exception: Exception) {
+                    TODO("Not yet implemented")
+                }
+
+            })
         }
 
     }

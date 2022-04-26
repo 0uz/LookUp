@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import android.widget.SearchView.OnQueryTextListener
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crypto.lookup.databinding.FragmentDashboardBinding
 import com.crypto.lookup.ui.login.UserViewModel
-import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
@@ -38,19 +36,31 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dashboardViewModel.setCurUser(sharedViewModel.getCurrentUser())
-        val layoutManager = LinearLayoutManager(context)
-        recyclerViewCoins.layoutManager = layoutManager
-        recyclerViewCoins.adapter = dashboardViewModel.addCoinPriceAdapter
+        dashboardViewModel.initializeAdaptersAndUser(sharedViewModel.getCurrentUser())
+
+        val layoutManagerAddCoin = LinearLayoutManager(context)
+        val layoutManagerSubscribed = LinearLayoutManager(context)
+
+        binding.recyclerViewCoins.layoutManager = layoutManagerAddCoin
+        binding.recyclerViewCoins.adapter = dashboardViewModel.addCoinPriceAdapter
+
+        binding.recyclerViewSubscribed.layoutManager = layoutManagerSubscribed
+        binding.recyclerViewSubscribed.adapter = dashboardViewModel.subscribedCoinAdapter
 
 
+        dashboardViewModel.setSubscribedCoinsData()
 
-        dashboardViewModel.coinListData.observe(this, Observer {
-            dashboardViewModel.setAdapterData(it.coins)
-//            dashboardViewModel.setSubscribedCoinsData() TODO
+        dashboardViewModel.subscribedCoinData.observe(this) {
+            dashboardViewModel.setSubscribedCoinAdapterData(it.coins)
+            println(dashboardViewModel.subscribedCoinData.value)
+        }
+
+
+        dashboardViewModel.coinListData.observe(this) {
+            dashboardViewModel.setCoinAdapterData(it.coins)
             binding.dashboardPB.isVisible = false
             binding.scrolviewDashview.isVisible = true
-        })
+        }
 
         binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

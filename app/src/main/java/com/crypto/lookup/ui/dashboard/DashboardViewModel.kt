@@ -5,33 +5,38 @@ import androidx.lifecycle.ViewModel
 import com.binance.api.client.BinanceApiClientFactory
 import com.binance.api.client.BinanceApiRestClient
 import com.crypto.lookup.data.User
-import com.crypto.lookup.data.UserService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class DashboardViewModel : ViewModel() {
 
     var coinListData: MutableLiveData<CoinList>
+    var subscribedCoinData: MutableLiveData<CoinList>
     lateinit var addCoinPriceAdapter: AddCoinPriceAdapter
     lateinit var subscribedCoinAdapter: SubscribedCoinAdapter
     lateinit var currentUser: User
-    lateinit var userService: UserService
 
     init {
         coinListData = MutableLiveData()
-        test()
+        subscribedCoinData = MutableLiveData()
     }
 
-    fun setCurUser(user: User) {
+    fun initializeAdaptersAndUser(user: User) {
+        addCoinPriceAdapter = AddCoinPriceAdapter(user)
+        subscribedCoinAdapter = SubscribedCoinAdapter(user)
         currentUser = user
-        addCoinPriceAdapter = AddCoinPriceAdapter()
     }
 
-
-    fun setAdapterData(data: ArrayList<Coin>) {
+    fun setCoinAdapterData(data: ArrayList<Coin>) {
         addCoinPriceAdapter.setDataList(data)
         addCoinPriceAdapter.notifyDataSetChanged()
     }
+
+    fun setSubscribedCoinAdapterData(data: ArrayList<Coin>) {
+        subscribedCoinAdapter.setDataList(data)
+        subscribedCoinAdapter.notifyDataSetChanged()
+    }
+
 
     fun setSubscribedCoinsData() {
         val y = arrayListOf<Coin>()
@@ -44,12 +49,13 @@ class DashboardViewModel : ViewModel() {
             for (coin in currentUser.subscribedCoins) {
                 y.add(Coin(coin, client.getPrice(coin).price.toFloat()))
             }
-            subscribedCoinAdapter.coinList = y
+            subscribedCoinData.postValue(CoinList(y))
+            setCoinListData()
         }
     }
 
 
-    fun test() {
+    fun setCoinListData() {
         val y = arrayListOf<Coin>()
         val factory: BinanceApiClientFactory = BinanceApiClientFactory.newInstance(
             "QaTHifDPd0jcU4NlNwcf8DptOykOJISTtpcLqY5AC3UiKDB3yOGNGmxuhlcmmiN9",
@@ -62,7 +68,8 @@ class DashboardViewModel : ViewModel() {
                 if (ticker.symbol.takeLast(4).equals("USDT") &&
                     ticker.bidPrice.toFloat() != 0F &&
                     !ticker.symbol.contains("UP", ignoreCase = true) &&
-                    !ticker.symbol.contains("DOWN", ignoreCase = true)
+                    !ticker.symbol.contains("DOWN", ignoreCase = true) &&
+                    subscribedCoinData.value!!.coins.all { !it.name.equals(ticker.symbol) }
                 )
                     y.add(Coin(ticker.symbol, ticker.bidPrice.toFloat()))
             }

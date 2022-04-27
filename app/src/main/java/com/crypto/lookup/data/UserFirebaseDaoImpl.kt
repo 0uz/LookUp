@@ -17,6 +17,8 @@ class UserFirebaseDaoImpl : UserDao {
     private val auth = FirebaseAuth.getInstance()
     private val messaging = FirebaseMessaging.getInstance()
 
+
+
     override fun save(user: User, password: String, listener: onSaveDataListener) {
         messaging.token.addOnSuccessListener { phoneID ->
             user.phoneID = phoneID

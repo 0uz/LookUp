@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
 import com.crypto.lookup.data.User
@@ -43,11 +45,12 @@ class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAda
 
     override fun onBindViewHolder(holder: CoinsWH, position: Int) {
 
-        holder.itemView.coinTextView.text = coinFilterList.get(position).name
-        holder.itemView.priceTextView.text = coinFilterList.get(position).price.toString()
+        val coin = coinFilterList.get(position)
+        holder.itemView.coinTextView.text = coin.name
+        holder.itemView.priceTextView.text = coin.price.toString()
         holder.itemView.dashboardButton.text = "Subscribe"
         holder.itemView.dashboardButton.setOnClickListener {
-            userService.subscribeCoin(user.email, coinFilterList.get(position).name, object : onSaveDataListener {
+            userService.subscribeCoin(user.email, coin.name, object : onSaveDataListener {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onSuccess() {
                     coinList.remove(coinList.get(position))
@@ -59,6 +62,11 @@ class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAda
                 }
 
             })
+        }
+
+        holder.itemView.coinTextView.setOnClickListener{
+            val bundle = bundleOf("symbol" to coin.name)
+            it.findNavController().navigate(R.id.action_navigation_dashboard_to_candleChartFragment,bundle)
         }
 
     }

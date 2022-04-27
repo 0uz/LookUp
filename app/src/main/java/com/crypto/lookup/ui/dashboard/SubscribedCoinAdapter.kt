@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
 import com.crypto.lookup.data.User
@@ -28,11 +30,12 @@ class SubscribedCoinAdapter(val user: User) : RecyclerView.Adapter<SubscribedCoi
     }
 
     override fun onBindViewHolder(holder: SubscribedCoinsWH, position: Int) {
-        holder.itemView.coinTextView.text = coinList.get(position).name
-        holder.itemView.priceTextView.text = coinList.get(position).price.toString()
+        val coin = coinList.get(position)
+        holder.itemView.coinTextView.text = coin.name
+        holder.itemView.priceTextView.text = coin.price.toString()
         holder.itemView.dashboardButton.text = "Unsubscribe"
         holder.itemView.dashboardButton.setOnClickListener {
-            userService.unsubscribeCoin(user.email, coinList.get(position).name, object : onSaveDataListener {
+            userService.unsubscribeCoin(user.email, coin.name, object : onSaveDataListener {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onSuccess() {
                     coinList.removeAt(position)
@@ -44,6 +47,11 @@ class SubscribedCoinAdapter(val user: User) : RecyclerView.Adapter<SubscribedCoi
                 }
 
             })
+        }
+
+        holder.itemView.coinTextView.setOnClickListener{
+            val bundle = bundleOf("symbol" to coin.name)
+            it.findNavController().navigate(R.id.action_navigation_dashboard_to_candleChartFragment,bundle)
         }
     }
 

@@ -37,36 +37,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        println(sharedViewModel.user.value)
-        val candleStickChart: CandleStickChart = binding.candleStickChart
-        candleStickChart.cameraDistance = 100F
-        candleStickChart.axisRight.isEnabled = false
-        candleStickChart.setBackgroundColor(Color.parseColor("#05053D"))
-        candleStickChart.description.isEnabled = false
-        candleStickChart.legend.textColor = Color.WHITE
-        candleStickChart.xAxis.textColor = Color.WHITE
-        candleStickChart.axisLeft.textColor = Color.WHITE
-        var zoomIn = true
-        homeViewModel.getData().observe(this, Observer {
-            val candleDataSet = CandleDataSet(it, "BTC USDT")
-            val candleData = CandleData(candleDataSet)
-            candleStickChart.data = candleData;
-            candleDataSet.axisDependency = YAxis.AxisDependency.LEFT
-            candleDataSet.shadowColor = Color.GRAY
-            candleDataSet.shadowWidth = 0.5f
-            candleDataSet.decreasingColor = Color.RED
-            candleDataSet.increasingColor = Color.GREEN
-            candleDataSet.neutralColor = Color.BLUE
-            candleDataSet.increasingPaintStyle = Paint.Style.FILL
-            candleDataSet.decreasingPaintStyle = Paint.Style.FILL
-            candleDataSet.valueTextColor = Color.WHITE
-            candleDataSet.valueTextSize = 9F
-            candleStickChart.invalidate()
-            binding.homePB.isVisible = false
-            binding.candleStickChart.isVisible = true
-            if (zoomIn) candleStickChart.moveViewToX(candleStickChart.xChartMax)
-            zoomIn = false
-        })
+
 
     }
 

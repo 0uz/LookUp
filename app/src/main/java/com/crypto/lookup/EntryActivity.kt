@@ -14,8 +14,5 @@ class EntryActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-
-        val navController = findNavController(R.id.nav_host_fragment_activity_entry)
-
     }
 }

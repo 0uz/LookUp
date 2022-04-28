@@ -61,7 +61,9 @@ class MainActivity : AppCompatActivity() {
                 "Server"
 
             if (snapshot != null && snapshot.exists()) {
-                sharedViewModel.setCurrentUser(snapshot.toObject(User::class.java)!!)
+                val snapshotuser = snapshot.toObject(User::class.java)!!
+                sharedViewModel.setCurrentUser(snapshotuser)
+                println(snapshotuser)
             } else {
                 Log.d("Listening", "$source data: null")
             }

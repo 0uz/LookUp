@@ -22,8 +22,12 @@ class DashboardViewModel : ViewModel() {
     }
 
     fun initializeAdaptersAndUser(user: User) {
-        addCoinPriceAdapter = AddCoinPriceAdapter(user)
         subscribedCoinAdapter = SubscribedCoinAdapter(user)
+        addCoinPriceAdapter = AddCoinPriceAdapter(user,subscribedCoinAdapter)
+        currentUser = user
+    }
+
+    fun updateCurrentUser(user: User){
         currentUser = user
     }
 
@@ -39,6 +43,8 @@ class DashboardViewModel : ViewModel() {
 
 
     fun setSubscribedCoinsData() {
+        println("COINLER UPDATELENDI")
+        println(currentUser.subscribedCoins)
         val y = arrayListOf<Coin>()
         val factory: BinanceApiClientFactory = BinanceApiClientFactory.newInstance(
             "QaTHifDPd0jcU4NlNwcf8DptOykOJISTtpcLqY5AC3UiKDB3yOGNGmxuhlcmmiN9",

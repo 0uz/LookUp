@@ -87,7 +87,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun Login() {
         db.retrieve(binding.loginEmail.text.toString(), object : onGetDataListener {
             override fun onSuccess(data: DocumentSnapshot) {
-                println(binding.loginEmail.text.toString())
                 val user = data.toObject(User::class.java)!!
                 val intent = Intent(activity, MainActivity::class.java)
                 val bundle = Bundle()
@@ -98,7 +97,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
             override fun onFailed(e: Exception) {
-                println("error")
+
             }
         })
     }

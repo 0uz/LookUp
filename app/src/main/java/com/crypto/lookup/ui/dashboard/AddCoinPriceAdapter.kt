@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.dashboard_coin_recycler_row.view.*
 import java.util.*
 
 
-class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
+class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedCoinAdapter) : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
     var coinList = ArrayList<Coin>()
     var coinFilterList = ArrayList<Coin>()
     var userService: UserService = UserService(UserFirebaseDaoImpl())
@@ -54,6 +54,8 @@ class AddCoinPriceAdapter(val user: User) : RecyclerView.Adapter<AddCoinPriceAda
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onSuccess() {
                     coinList.remove(coinList.get(position))
+                    subscribedCoinAdapter.coinList.add(coin)
+                    subscribedCoinAdapter.notifyDataSetChanged()
                     notifyDataSetChanged()
                 }
 

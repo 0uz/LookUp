@@ -11,6 +11,7 @@ class UserViewModel : ViewModel() {
 
     fun setCurrentUser(user: User) {
         _user.value = user
+        _user.postValue(user)
     }
 
     fun getCurrentUser(): User {

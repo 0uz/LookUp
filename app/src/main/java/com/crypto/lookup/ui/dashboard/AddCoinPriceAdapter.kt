@@ -1,12 +1,14 @@
 package com.crypto.lookup.ui.dashboard
 
 import android.os.Build
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -48,8 +50,10 @@ class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedC
         val coin = coinFilterList.get(position)
         holder.itemView.coinTextView.text = coin.name
         holder.itemView.priceTextView.text = coin.price.toString()
-        holder.itemView.dashboardButton.text = "Subscribe"
-        holder.itemView.dashboardButton.setOnClickListener {
+        val icon = holder.itemView.context.resources.getDrawable(R.drawable.subscribe_heart)
+        val dashboardButton = holder.itemView.dashboardButton
+        dashboardButton.setCompoundDrawablesWithIntrinsicBounds(null,null,icon,null)
+        dashboardButton.setOnClickListener {
             userService.subscribeCoin(user.email, coin.name, object : onSaveDataListener {
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onSuccess() {

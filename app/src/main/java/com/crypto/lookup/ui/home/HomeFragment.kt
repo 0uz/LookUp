@@ -1,21 +1,13 @@
 package com.crypto.lookup.ui.home
 
-import android.graphics.Color
-import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.crypto.lookup.databinding.FragmentHomeBinding
 import com.crypto.lookup.ui.login.UserViewModel
-import com.github.mikephil.charting.charts.CandleStickChart
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.data.CandleData
-import com.github.mikephil.charting.data.CandleDataSet
 
 class HomeFragment : Fragment() {
 

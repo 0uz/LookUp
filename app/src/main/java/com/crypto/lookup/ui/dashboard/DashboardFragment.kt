@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crypto.lookup.databinding.FragmentDashboardBinding
 import com.crypto.lookup.ui.login.UserViewModel
-import kotlinx.android.synthetic.main.fragment_dashboard.*
 
 class DashboardFragment : Fragment() {
 
@@ -30,8 +29,6 @@ class DashboardFragment : Fragment() {
             ViewModelProvider(this).get(DashboardViewModel::class.java)
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-
         return root
     }
 
@@ -54,7 +51,6 @@ class DashboardFragment : Fragment() {
             dashboardViewModel.setSubscribedCoinAdapterData(it.coins)
         }
 
-
         dashboardViewModel.coinListData.observe(viewLifecycleOwner) {
             dashboardViewModel.setCoinAdapterData(it.coins)
             binding.dashboardPB.isVisible = false
@@ -63,7 +59,6 @@ class DashboardFragment : Fragment() {
 
         sharedViewModel.user.observe(viewLifecycleOwner) {
             dashboardViewModel.updateCurrentUser(sharedViewModel.getCurrentUser())
-
         }
 
         binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
@@ -75,7 +70,6 @@ class DashboardFragment : Fragment() {
                 dashboardViewModel.addCoinPriceAdapter.filter.filter(query)
                 return false
             }
-
         })
 
     }

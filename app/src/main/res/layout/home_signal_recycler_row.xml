@@ -38,4 +38,14 @@
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="@+id/signalCoinName"
         app:layout_constraintTop_toBottomOf="@+id/signalCoinName" />
+
+    <TextView
+        android:id="@+id/signalCoinPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toEndOf="@+id/signalCoinName"
+        app:layout_constraintTop_toTopOf="@+id/signalCoinName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

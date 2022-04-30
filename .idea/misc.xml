@@ -43,7 +43,7 @@
         <entry key="..\:/Users/Varol/IdeaProjects/LookUp/app/src/main/res/layout/recycler_row.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/layout/dashboard_coin_recycler_row.xml" value="0.23229166666666667" />
         <entry key="app/src/main/res/layout/fragment_candlechart.xml" value="0.284375" />
-        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.24682971014492755" />
+        <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.284375" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.24682971014492755" />
         <entry key="app/src/main/res/layout/home_signal_recycler_row.xml" value="0.26766304347826086" />

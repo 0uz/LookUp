@@ -54,7 +54,7 @@ class DashboardFragment : Fragment() {
         dashboardViewModel.coinListData.observe(viewLifecycleOwner) {
             dashboardViewModel.setCoinAdapterData(it.coins)
             binding.dashboardPB.isVisible = false
-            binding.scrolviewDashview.isVisible = true
+            binding.subsLayout.isVisible = true
         }
 
         sharedViewModel.user.observe(viewLifecycleOwner) {
@@ -71,6 +71,16 @@ class DashboardFragment : Fragment() {
                 return false
             }
         })
+
+        binding.dashboardAll.setOnClickListener{
+            binding.subsLayout.isVisible = false
+            binding.coinLayout.isVisible = true
+        }
+
+        binding.dashboardSub.setOnClickListener{
+            binding.coinLayout.isVisible = false
+            binding.subsLayout.isVisible = true
+        }
 
     }
 

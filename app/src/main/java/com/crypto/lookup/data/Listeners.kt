@@ -7,7 +7,13 @@ interface onGetDataListener {
     fun onFailed(e: Exception)
 }
 
+interface onGetDataListListener {
+    fun onSuccess(data: List<DocumentSnapshot>)
+    fun onFailed(e: Exception)
+}
+
 interface onSaveDataListener {
     fun onSuccess()
     fun onFailed(exception: Exception)
 }
+

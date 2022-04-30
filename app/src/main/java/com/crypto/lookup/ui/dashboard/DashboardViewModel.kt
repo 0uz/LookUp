@@ -20,7 +20,6 @@ class DashboardViewModel : ViewModel() {
         coinListData = MutableLiveData()
         subscribedCoinData = MutableLiveData()
     }
-
     fun initializeAdaptersAndUser(user: User) {
         subscribedCoinAdapter = SubscribedCoinAdapter(user)
         addCoinPriceAdapter = AddCoinPriceAdapter(user,subscribedCoinAdapter)

@@ -1,15 +1,16 @@
 package com.crypto.lookup.ui.home
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crypto.lookup.data.listeners.onGetDataListListener
-import com.crypto.lookup.data.listeners.onGetDataListener
 import com.crypto.lookup.databinding.FragmentHomeBinding
 import com.crypto.lookup.ui.login.UserViewModel
 import com.google.firebase.firestore.DocumentSnapshot
@@ -20,7 +21,7 @@ class HomeFragment : Fragment() {
     private lateinit var sharedViewModel: UserViewModel
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var signalCoinService : SignalCoinService
+    private lateinit var signalCoinService: SignalCoinService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,30 +39,12 @@ class HomeFragment : Fragment() {
         val layoutManagerSignalCoin = LinearLayoutManager(context)
         binding.signalRecylerView.layoutManager = layoutManagerSignalCoin
         binding.signalRecylerView.adapter = homeViewModel.signalCoinAdapter
-//        homeViewModel.fakeData() TODO IT IS FAKE DATA
+
+        initData()
         homeViewModel.signalCoinListData.observe(viewLifecycleOwner) {
-
-
+            homeViewModel.setAdapterData(it)
         }
-        homeViewModel.signalCoinListData.postValue(SignalCoinList(arrayListOf(SignalCoin(symbol = "BNBUSDT",null,null,null,null))))
 
-        homeViewModel.initData(arrayListOf(
-            SignalCoin(symbol = "BTCUSDT",null,null,null,null),
-            SignalCoin(symbol = "ETHUSDT",null,null,null,null),
-        ))
-        Log.w("QUERRY",homeViewModel.signalCoinListData.value.toString())
-//        signalCoinService.retrieve(homeViewModel.signalCoinListData.value!! ,object :onGetDataListListener{
-//
-//            override fun onSuccess(data: List<DocumentSnapshot>) {
-//                Log.w("DATA",data.toString())
-//            }
-//
-//            override fun onFailed(e: Exception) {
-//
-//            }
-//
-//        })
-        homeViewModel.signalCoinListData.postValue(SignalCoinList(arrayListOf(SignalCoin(symbol = "BTCUSDT",null,null,null,null))))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,6 +52,23 @@ class HomeFragment : Fragment() {
 
     }
 
+    fun initData() {
+        signalCoinService.retrieve(sharedViewModel.getCurrentUser().subscribedCoins, object : onGetDataListListener {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onSuccess(data: List<DocumentSnapshot>) {
+                Log.w("DATA", data.toString())
+                val coinData = ArrayList<SignalCoin>()
+                data.forEach {
+                    if (data.isNotEmpty()) coinData.add(it.toObject(SignalCoin::class.java)!!)
+                }
+                homeViewModel.dataUpdate(5000, coinData)
+            }
+
+            override fun onFailed(e: Exception) {
+
+            }
+        })
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

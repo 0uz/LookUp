@@ -25,13 +25,19 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        sharedViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        val user = intent?.extras?.getSerializable("user")
+        sharedViewModel.setCurrentUser(user as User)
+
         super.onCreate(savedInstanceState)
+
         supportActionBar?.hide()
         binding = ActivityMainBinding.inflate(layoutInflater)
 
+
+
         setContentView(binding.root)
-
-
         val navView: BottomNavigationView = binding.navView
         navView.itemActiveIndicatorColor
 
@@ -44,9 +50,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        sharedViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        val user = intent?.extras?.getSerializable("user")
-        sharedViewModel.setCurrentUser(user as User)
+
 
         userService = UserService(UserFirebaseDaoImpl())
         userService.userCollection().document(user.email).addSnapshotListener { snapshot, e ->
@@ -63,7 +67,6 @@ class MainActivity : AppCompatActivity() {
             if (snapshot != null && snapshot.exists()) {
                 val snapshotuser = snapshot.toObject(User::class.java)!!
                 sharedViewModel.setCurrentUser(snapshotuser)
-                println(snapshotuser)
             } else {
                 Log.d("Listening", "$source data: null")
             }

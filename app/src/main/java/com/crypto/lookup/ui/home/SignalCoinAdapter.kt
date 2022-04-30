@@ -1,25 +1,15 @@
 package com.crypto.lookup.ui.home
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.view.View
+import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.binance.api.client.BinanceApiClientFactory
-import com.binance.api.client.BinanceApiWebSocketClient
-import com.binance.api.client.domain.market.CandlestickInterval
 import com.crypto.lookup.R
 import kotlinx.android.synthetic.main.home_signal_recycler_row.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.Closeable
-import java.util.*
-import kotlin.collections.ArrayList
 
 class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
     var signalCoins = ArrayList<SignalCoin>()
-    var candlestickEvent = ArrayList<Closeable>()
 
     class SignalWH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -37,7 +27,25 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
     override fun onBindViewHolder(holder: SignalWH, position: Int) {
         val signalCoin = signalCoins.get(position)
         holder.itemView.signalCoinName.text = signalCoin.symbol
-        holder.itemView.signalCoinPrice.text = signalCoin.closePrice.toString()
+        holder.itemView.signalCoinPrice.text = signalCoin.currentPrice.toString()
+        holder.itemView.signalOpenDate.text = signalCoin.openDate.toString()
+        if (signalCoin.currentPrice > signalCoin.openPrice)
+            holder.itemView.signalImage.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    holder.itemView.resources,
+                    R.drawable.increase,
+                    null
+                )
+            )
+        else
+            holder.itemView.signalImage.setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    holder.itemView.resources,
+                    R.drawable.decrease,
+                    null
+                )
+            )
+
     }
 
 

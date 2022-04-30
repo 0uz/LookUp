@@ -1,14 +1,13 @@
 package com.crypto.lookup.ui.home
 
 import com.crypto.lookup.data.listeners.onGetDataListListener
-import com.crypto.lookup.data.listeners.onGetDataListener
 
 class SignalCoinService(private val signalCoinDao: SignalCoinDao) {
-    fun retrieve(signalCoin: SignalCoinList, listener: onGetDataListListener) {
-        signalCoinDao.retrieve(signalCoin,listener)
+    fun retrieve(signalCoin: ArrayList<String>, listener: onGetDataListListener) {
+        signalCoinDao.retrieve(signalCoin, listener)
     }
 
     fun fakeData() {
-        signalCoinDao.fakeData()
+        signalCoinDao.fakeData() // TODO DELETE
     }
 }

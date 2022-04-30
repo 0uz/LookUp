@@ -46,7 +46,7 @@
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.284375" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.24682971014492755" />
-        <entry key="app/src/main/res/layout/home_signal_recycler_row.xml" value="0.26766304347826086" />
+        <entry key="app/src/main/res/layout/home_signal_recycler_row.xml" value="0.55" />
       </map>
     </option>
   </component>

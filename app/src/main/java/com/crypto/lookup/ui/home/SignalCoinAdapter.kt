@@ -1,5 +1,7 @@
 package com.crypto.lookup.ui.home
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +9,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
 import kotlinx.android.synthetic.main.home_signal_recycler_row.view.*
+import java.text.SimpleDateFormat
 
 class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
     var signalCoins = ArrayList<SignalCoin>()
@@ -24,12 +27,16 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
         return signalCoins.size
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SignalWH, position: Int) {
         val signalCoin = signalCoins.get(position)
         holder.itemView.signalCoinName.text = signalCoin.symbol
-        holder.itemView.signalCoinPrice.text = signalCoin.currentPrice.toString()
-        holder.itemView.signalOpenDate.text = signalCoin.openDate.toString()
-        if (signalCoin.currentPrice > signalCoin.openPrice)
+        holder.itemView.signalCoinCurrentPrice.text =
+            signalCoin.currentPrice.toString() + "$ %" + ((signalCoin.currentPrice - signalCoin.openPrice) / signalCoin.openPrice)
+        holder.itemView.signalCoinOpenPrice.text = signalCoin.openPrice.toString() + "$"
+        holder.itemView.signalOpenDate.text = SimpleDateFormat("dd/mm/yyyy hh:mm").format(signalCoin.openDate)
+        if (signalCoin.currentPrice > signalCoin.openPrice) {
+            holder.itemView.signalCoinCurrentPrice.setTextColor(Color.GREEN)
             holder.itemView.signalImage.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     holder.itemView.resources,
@@ -37,7 +44,8 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
                     null
                 )
             )
-        else
+        } else {
+            holder.itemView.signalCoinCurrentPrice.setTextColor(Color.RED)
             holder.itemView.signalImage.setImageDrawable(
                 ResourcesCompat.getDrawable(
                     holder.itemView.resources,
@@ -45,6 +53,8 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
                     null
                 )
             )
+        }
+
 
     }
 

@@ -36,6 +36,11 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.homeProgressBar.visibility = View.VISIBLE
+        binding.signalScrollView.visibility = View.INVISIBLE
+
+
         val layoutManagerSignalCoin = LinearLayoutManager(context)
         binding.signalRecylerView.layoutManager = layoutManagerSignalCoin
         binding.signalRecylerView.adapter = homeViewModel.signalCoinAdapter
@@ -62,6 +67,10 @@ class HomeFragment : Fragment() {
                     if (data.isNotEmpty()) coinData.add(it.toObject(SignalCoin::class.java)!!)
                 }
                 homeViewModel.dataUpdate(5000, coinData)
+                binding.homeProgressBar.visibility = View.GONE
+                binding.signalScrollView.visibility = View.VISIBLE
+                if (coinData.size < 1) binding.signalNoCoin.visibility = View.VISIBLE
+                else binding.signalNoCoin.visibility = View.GONE
             }
 
             override fun onFailed(e: Exception) {

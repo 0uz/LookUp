@@ -68,9 +68,12 @@ class DashboardFragment : Fragment() {
 
             override fun onQueryTextChange(query: String?): Boolean {
                 dashboardViewModel.addCoinPriceAdapter.filter.filter(query)
+                dashboardViewModel.subscribedCoinAdapter.filter.filter(query)
                 return false
             }
         })
+
+
 
         binding.dashboardAll.setOnClickListener{
             binding.subsLayout.isVisible = false

@@ -1,14 +1,12 @@
 package com.crypto.lookup.ui.dashboard
 
 import android.os.Build
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.annotation.RequiresApi
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +29,7 @@ class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedC
 
     }
 
+
     fun setDataList(data: ArrayList<Coin>) {
         this.coinList = data
         coinFilterList = coinList
@@ -46,7 +45,6 @@ class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedC
     }
 
     override fun onBindViewHolder(holder: CoinsWH, position: Int) {
-
         val coin = coinFilterList.get(position)
         holder.itemView.coinTextView.text = coin.name
         holder.itemView.priceTextView.text = coin.price.toString()
@@ -58,7 +56,8 @@ class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedC
                 @RequiresApi(Build.VERSION_CODES.N)
                 override fun onSuccess() {
                     coinList.remove(coinList.get(position))
-                    subscribedCoinAdapter.coinList.add(coin)
+                    coinFilterList.remove(coin)
+                    subscribedCoinAdapter.addCoin(coin)
                     subscribedCoinAdapter.notifyDataSetChanged()
                     notifyDataSetChanged()
                 }

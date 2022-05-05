@@ -35,6 +35,7 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
             signalCoin.currentPrice.toString() + "$ %" + ((signalCoin.currentPrice - signalCoin.openPrice) / signalCoin.openPrice)
         holder.itemView.signalCoinOpenPrice.text = signalCoin.openPrice.toString() + "$"
         holder.itemView.signalOpenDate.text = SimpleDateFormat("dd/mm/yyyy hh:mm").format(signalCoin.openDate)
+
         if (signalCoin.currentPrice > signalCoin.openPrice) {
             holder.itemView.signalCoinCurrentPrice.setTextColor(Color.GREEN)
             holder.itemView.signalImage.setImageDrawable(

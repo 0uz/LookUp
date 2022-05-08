@@ -62,6 +62,7 @@ class DashboardViewModel : ViewModel() {
 
     fun setCoinListData() {
         val y = arrayListOf<Coin>()
+        val x = arrayListOf<String>()
         val factory: BinanceApiClientFactory = BinanceApiClientFactory.newInstance(
             "QaTHifDPd0jcU4NlNwcf8DptOykOJISTtpcLqY5AC3UiKDB3yOGNGmxuhlcmmiN9",
             "P1DENk2ufvuvYHyFbv0iu7AvWFWIYmgRkJjN9YwXr3C0WxjCzmF9KOHlnMbi4fTj"

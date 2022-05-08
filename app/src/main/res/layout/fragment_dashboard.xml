@@ -28,30 +28,42 @@
             android:layout_marginStart="10dp" android:layout_marginEnd="10dp"
             app:layout_constraintHorizontal_bias="0.0">
     </SearchView>
+
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        <Button
+            android:id="@+id/dashboardAll"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/searchView"
-            android:id="@+id/linearLayout" android:gravity="center_horizontal"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="5dp">
+            android:layout_marginRight="50dp"
+            android:text="ALL"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:cornerRadius="6dp"
+            app:strokeColor="#1A1A45"
+            app:strokeWidth="2dp" />
+
         <Button
-                android:id="@+id/dashboardAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ALL"
-                android:textSize="16sp" app:strokeWidth="2dp" app:strokeColor="#1A1A45"
-                style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_marginRight="50dp"
-        />
-        />
-        <Button
-                android:id="@+id/dashboardSub"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SUB"
-                android:textSize="16sp" app:strokeWidth="2dp" app:strokeColor="#1A1A45"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+            android:id="@+id/dashboardSub"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SUB"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:cornerRadius="6dp"
+            app:strokeColor="#1A1A45"
+            app:strokeWidth="2dp" />
 
     </LinearLayout>
     <LinearLayout

@@ -14,4 +14,5 @@ data class SignalCoin(
     var currentPrice: Float = 0F,
     val openDate: Date? = null,
     val closeDate: Date? = null,
+    val isOpen: Boolean = true,
 ) : Serializable

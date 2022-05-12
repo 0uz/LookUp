@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="#FFFFFF"
-            android:backgroundTint="#232357"
+            android:backgroundTint="@color/lightmainScreenColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="10dp" android:layout_marginEnd="10dp"
@@ -41,29 +41,29 @@
         app:layout_constraintTop_toBottomOf="@+id/searchView">
 
         <Button
-            android:id="@+id/dashboardAll"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="50dp"
-            android:text="ALL"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:cornerRadius="6dp"
-            app:strokeColor="#1A1A45"
-            app:strokeWidth="2dp" />
+                android:id="@+id/dashboardAll"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="50dp"
+                android:text="ALL"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:cornerRadius="6dp"
+                app:strokeColor="@color/mainScreenSecondColor"
+                app:strokeWidth="2dp"/>
 
         <Button
-            android:id="@+id/dashboardSub"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="SUB"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:cornerRadius="6dp"
-            app:strokeColor="#1A1A45"
-            app:strokeWidth="2dp" />
+                android:id="@+id/dashboardSub"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SUB"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:cornerRadius="6dp"
+                app:strokeColor="@color/mainScreenSecondColor"
+                app:strokeWidth="2dp"/>
 
     </LinearLayout>
     <LinearLayout
@@ -124,7 +124,7 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewSubscribed"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" android:background="@color/lightmainScreenColor"/>
         </ScrollView>
 
     </LinearLayout>
@@ -133,12 +133,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2" app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="1.0" android:visibility="visible">
 
         <ScrollView
                 android:id="@+id/scrolviewDashview"
@@ -150,10 +149,8 @@
                     android:id="@+id/recyclerViewCoins"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="4dp"
-                    android:background="#232357"
-                    android:visibility="visible" />
+                    android:background="@color/lightmainScreenColor"
+                    android:visibility="visible"/>
         </ScrollView>
 
     </LinearLayout>

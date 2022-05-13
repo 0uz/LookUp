@@ -13,4 +13,7 @@ interface UserDao {
     fun unsubscribeCoin(email: String, symbol: String, listener: onSaveDataListener)
     fun userCollection(): CollectionReference
     fun subscribeCoin(email: String, symbol: String, listener: onSaveDataListener)
+    fun updateEmail(newEmail: String, currentUser: User, listener: onSaveDataListener)
+    fun updatePassword(newPassword: String, listener: onSaveDataListener)
+    fun checkPassword(oldPassword: String, listener: onSaveDataListener)
 }

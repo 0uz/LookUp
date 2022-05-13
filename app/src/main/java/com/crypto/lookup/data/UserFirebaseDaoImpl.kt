@@ -94,5 +94,71 @@ class UserFirebaseDaoImpl : UserDao {
         }
     }
 
+    override fun updateEmail(newEmail: String, currentUser: User, listener: onSaveDataListener) {
+        val oldEmail = currentUser.email
+        currentUser.email = newEmail
+        updateAuthEmail(newEmail, object : onSaveDataListener {
+            override fun onSuccess() {
+                db.document(newEmail).set(currentUser).addOnSuccessListener {
+                    deleteOldUser(oldEmail, object : onSaveDataListener {
+                        override fun onSuccess() {
+                            listener.onSuccess()
+                        }
+
+                        override fun onFailed(exception: Exception) {
+                            Log.w("DELETE", exception.stackTraceToString())
+                            listener.onFailed(exception)
+                        }
+                    })
+                }.addOnFailureListener {
+                    Log.w("SET NEW USER", it.stackTraceToString())
+                    listener.onFailed(it)
+                }
+            }
+
+            override fun onFailed(exception: Exception) {
+                Log.w("AUTH", exception.stackTraceToString())
+                listener.onFailed(exception)
+            }
+        })
+
+
+    }
+
+    override fun updatePassword(newPassword: String, listener: onSaveDataListener) {
+        val currentUser = auth.currentUser
+        currentUser!!.updatePassword(newPassword)
+        auth.updateCurrentUser(currentUser).addOnSuccessListener {
+            listener.onSuccess()
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
+    }
+
+    override fun checkPassword(oldPassword: String, listener: onSaveDataListener) {
+        auth.signInWithEmailAndPassword(auth.currentUser!!.email.toString(), oldPassword).addOnSuccessListener {
+            listener.onSuccess()
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
+    }
+
+    private fun updateAuthEmail(newEmail: String, listener: onSaveDataListener) {
+        auth.currentUser!!.updateEmail(newEmail)
+        auth.updateCurrentUser(auth.currentUser!!).addOnSuccessListener {
+            listener.onSuccess()
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
+    }
+
+    private fun deleteOldUser(oldEmail: String, listener: onSaveDataListener) {
+        db.document(oldEmail).delete().addOnSuccessListener {
+            listener.onSuccess()
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
+    }
+
 
 }

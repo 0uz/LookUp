@@ -14,10 +14,15 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun retrieve(signalCoin: ArrayList<String>, listener: onGetDataListListener) {
         val currentTimeMillis = System.currentTimeMillis()
+        if (signalCoin.size < 1) {
+            listener.onSuccess(listOf())
+            return
+        }
+
         db.whereIn("symbol", signalCoin)
             .whereGreaterThanOrEqualTo("openDate", Date(currentTimeMillis - 86400000))
             .whereLessThanOrEqualTo("openDate", Date(currentTimeMillis))
-                //TODO null olmayanlari cekme kismini ekle
+            //TODO null olmayanlari cekme kismini ekle
             //TODO 10dan fazla kullanici ekleme durumu handle et
             .get().addOnSuccessListener {
                 listener.onSuccess(it.documents)

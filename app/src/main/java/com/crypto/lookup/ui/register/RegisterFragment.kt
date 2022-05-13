@@ -50,6 +50,13 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         setValidationListeners()
+        binding.email.setText("test@test.com")
+        binding.password.setText("123456")
+        binding.passwordAgain.setText("123456")
+        binding.name.setText("Oguzhan")
+        binding.surname.setText("Duymaz")
+        binding.identityNumber.setText("12345678900")
+        binding.phoneNo.setText("123456")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -139,6 +146,8 @@ class RegisterFragment : Fragment() {
 
         binding.RegisterCreateAccButton.setOnClickListener {
             isEnable[6] = Validation.isBirthdateValid(birthdate)
+            binding.RegisterCreateAccButton.visibility = View.INVISIBLE
+            binding.registerPB.visibility = View.VISIBLE
             if (isEnable.stream().allMatch { it.equals(true) }) {
                 val user = User(
                     binding.name.text.toString(),
@@ -160,9 +169,14 @@ class RegisterFragment : Fragment() {
                         } else {
                             Toast.makeText(context, getString(R.string.register_failed), Toast.LENGTH_LONG).show()
                         }
+                        binding.RegisterCreateAccButton.visibility = View.VISIBLE
+                        binding.registerPB.visibility = View.INVISIBLE
                     }
 
                 })
+            } else {
+                binding.RegisterCreateAccButton.visibility = View.VISIBLE
+                binding.registerPB.visibility = View.INVISIBLE
             }
         }
         binding.RegisterLoginButton.setOnClickListener {

@@ -22,7 +22,7 @@ import java.util.*
 class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedCoinAdapter) : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
     var coinList = ArrayList<Coin>()
     var coinFilterList = ArrayList<Coin>()
-    var userService: UserService = UserService(UserFirebaseDaoImpl())
+    private val userService: UserService = UserService(UserFirebaseDaoImpl())
 
 
     class CoinsWH(itemView: View) : RecyclerView.ViewHolder(itemView) {

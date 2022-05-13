@@ -23,9 +23,9 @@
 
     <fragment
             android:id="@+id/navigation_notifications"
-            android:name="com.crypto.lookup.ui.notifications.NotificationsFragment"
+            android:name="com.crypto.lookup.ui.profile.ProfileFragment"
             android:label="@string/title_profile"
-            tools:layout="@layout/fragment_notifications"/>
+            tools:layout="@layout/fragment_profile"/>
     <fragment
         android:id="@+id/candleChartFragment"
         android:name="com.crypto.lookup.ui.candlechart.CandleChartFragment"

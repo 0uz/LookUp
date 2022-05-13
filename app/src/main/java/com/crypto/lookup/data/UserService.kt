@@ -35,4 +35,16 @@ class UserService(private val userDao: UserDao) {
     fun subscribeCoin(email: String, symbol: String, listener: onSaveDataListener) {
         userDao.subscribeCoin(email, symbol, listener)
     }
+
+    fun updateEmail(newEmail: String, currentUser: User, listener: onSaveDataListener) {
+        userDao.updateEmail(newEmail, currentUser, listener)
+    }
+
+    fun updatePassword(newPassword: String, listener: onSaveDataListener) {
+        userDao.updatePassword(newPassword, listener)
+    }
+
+    fun checkPassword(oldPassword: String, listener: onSaveDataListener) {
+        userDao.checkPassword(oldPassword, listener)
+    }
 }

@@ -19,7 +19,9 @@ import com.crypto.lookup.data.UserService
 import com.crypto.lookup.data.listeners.onGetDataListener
 import com.crypto.lookup.databinding.FragmentLoginBinding
 import com.crypto.lookup.utils.Validation
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.ktx.Firebase
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
@@ -70,6 +72,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         binding.LoginLoginButton.setOnClickListener {
             if (!binding.loginEmailTil.isErrorEnabled || binding.loginPasswordTil.isErrorEnabled) {
+                binding.LoginLoginButton.isEnabled = false
+                binding.LoginLoginButton.visibility = View.INVISIBLE
+                binding.loginButtonPB.visibility = View.VISIBLE
                 Login()
             }
         }
@@ -88,6 +93,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         db.retrieve(binding.loginEmail.text.toString(), object : onGetDataListener {
             override fun onSuccess(data: DocumentSnapshot) {
                 val user = data.toObject(User::class.java)!!
+                Firebase.auth.signInWithEmailAndPassword(
+                    binding.loginEmail.text.toString(),
+                    binding.loginPassword.text.toString()
+                )
                 val intent = Intent(activity, MainActivity::class.java)
                 val bundle = Bundle()
                 bundle.putSerializable("user", user)

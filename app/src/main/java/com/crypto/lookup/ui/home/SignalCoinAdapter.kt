@@ -9,6 +9,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
 import kotlinx.android.synthetic.main.home_signal_recycler_row.view.*
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
 class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
@@ -31,8 +32,9 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
     override fun onBindViewHolder(holder: SignalWH, position: Int) {
         val signalCoin = signalCoins.get(position)
         holder.itemView.signalCoinName.text = signalCoin.symbol
+        val df = DecimalFormat("#.##")
         holder.itemView.signalCoinCurrentPrice.text =
-            signalCoin.currentPrice.toString() + "$ %" + ((signalCoin.currentPrice - signalCoin.openPrice) / signalCoin.openPrice)
+            signalCoin.currentPrice.toString() + "$ %" + df.format(((signalCoin.currentPrice - signalCoin.openPrice) / signalCoin.openPrice) * 100)
         holder.itemView.signalCoinOpenPrice.text = signalCoin.openPrice.toString() + "$"
         holder.itemView.signalOpenDate.text = SimpleDateFormat("dd/mm/yyyy hh:mm").format(signalCoin.openDate)
 

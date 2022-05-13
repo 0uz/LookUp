@@ -57,7 +57,8 @@
             android:backgroundTint="#54D0B4"
             android:layout_height="45dp" android:id="@+id/LoginLoginButton"
             app:layout_constraintEnd_toEndOf="@+id/loginPassword_til"
-            app:layout_constraintTop_toBottomOf="@+id/LoginForgotPassword" android:layout_marginTop="10dp"/>
+            app:layout_constraintTop_toBottomOf="@+id/LoginForgotPassword" android:layout_marginTop="10dp"
+            android:visibility="visible"/>
     <Button
             android:text="@string/button_register"
             android:layout_width="110dp"
@@ -72,4 +73,13 @@
             android:textColor="#FFFFFF"
             app:layout_constraintEnd_toEndOf="@+id/loginPassword_til"
             app:layout_constraintTop_toBottomOf="@+id/loginPassword_til" android:layout_marginTop="10dp"/>
+    <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:id="@+id/loginButtonPB"
+            app:layout_constraintTop_toBottomOf="@+id/LoginForgotPassword"
+            app:layout_constraintStart_toStartOf="@+id/LoginForgotPassword"
+            app:layout_constraintEnd_toEndOf="@+id/LoginForgotPassword" android:layout_marginTop="10dp"
+            android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

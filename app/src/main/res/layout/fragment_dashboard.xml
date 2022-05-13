@@ -11,18 +11,18 @@
             android:text="Prices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textView6"
-            android:textColor="#FFFFFF" android:textSize="24sp"
+            android:textColor="@color/white" android:textSize="24sp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="16dp"
-            app:layout_constraintHorizontal_bias="0.046" />
+            app:layout_constraintHorizontal_bias="0.046"/>
 
     <SearchView
             android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="#FFFFFF"
-            android:backgroundTint="@color/lightmainScreenColor"
+            android:background="@color/white"
+            android:backgroundTint="@color/lightMainScreenColor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="10dp" android:layout_marginEnd="10dp"
@@ -50,7 +50,7 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"
-                app:strokeColor="@color/mainScreenSecondColor"
+                app:strokeColor="@color/white"
                 app:strokeWidth="2dp"/>
 
         <Button
@@ -62,8 +62,9 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"
-                app:strokeColor="@color/mainScreenSecondColor"
-                app:strokeWidth="2dp"/>
+                app:strokeColor="@color/white"
+                app:strokeWidth="2dp"
+        />
 
     </LinearLayout>
     <LinearLayout
@@ -80,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Coin"
-                android:textColor="#ECECEC"
+                android:textColor="@color/white"
                 android:textSize="16sp"/>
         <TextView
                 android:id="@+id/priceTextView3"
@@ -88,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Price"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp" android:gravity="left"/>
     </LinearLayout>
     <ProgressBar
@@ -124,7 +125,7 @@
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewSubscribed"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:background="@color/lightmainScreenColor"/>
+                    android:layout_height="wrap_content" android:background="@color/lightMainScreenColor"/>
         </ScrollView>
 
     </LinearLayout>
@@ -149,7 +150,7 @@
                     android:id="@+id/recyclerViewCoins"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/lightmainScreenColor"
+                    android:background="@color/lightMainScreenColor"
                     android:visibility="visible"/>
         </ScrollView>
 

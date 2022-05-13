@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.crypto.lookup.databinding.FragmentNotificationsBinding
 import com.crypto.lookup.ui.login.UserViewModel
+import java.text.SimpleDateFormat
 
 class NotificationsFragment : Fragment() {
 
@@ -40,6 +39,13 @@ class NotificationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val currentUser = sharedViewModel.getCurrentUser()
+        binding.profileEmail.text = currentUser.email
+        binding.profileBirthdate.text = SimpleDateFormat("dd/mm/yyyy").format(currentUser.birthDate)
+        binding.profileIdentity.text = currentUser.identityNumber.toString()
+        binding.profilePhone.text = currentUser.phoneNumber.toString()
+        binding.profileNameSur.text =
+            currentUser.name.replaceFirstChar { it.uppercase() } + " " + currentUser.surname.uppercase()
     }
 
     override fun onDestroyView() {

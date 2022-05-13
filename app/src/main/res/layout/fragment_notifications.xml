@@ -19,20 +19,20 @@
                 android:textSize="20sp"
                 android:text="Personal Information"
                 android:textColor="@color/white"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp" android:paddingStart="10dp"/>
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
+                android:paddingEnd="10dp">
             <TextView
                     android:text="Name/Surname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView8" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
             <TextView
-                    android:text="name surname"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView9" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:id="@+id/profileNameSur" android:layout_weight="1"
                     android:textSize="16sp" android:textColor="@color/white" android:textAlignment="viewEnd"/>
         </LinearLayout>
         <View
@@ -42,16 +42,16 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
+                android:paddingEnd="10dp">
             <TextView
                     android:text="E-mail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView11" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
             <TextView
-                    android:text="sdgsdgsd@gmail.com"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView12" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:id="@+id/profileEmail" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp" android:textAlignment="viewEnd"/>
         </LinearLayout>
         <View
@@ -61,16 +61,16 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
+                android:paddingEnd="10dp">
             <TextView
                     android:text="Phone Number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView13" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
             <TextView
-                    android:text="555647986"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView14" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:id="@+id/profilePhone" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp" android:textAlignment="viewEnd"/>
         </LinearLayout>
         <View
@@ -80,16 +80,16 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
+                android:paddingEnd="10dp">
             <TextView
                     android:text="Birthday"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView15" android:layout_weight="1"
                     android:textSize="16sp" android:textColor="@color/white"/>
             <TextView
-                    android:text="04.05.1990"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView16" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:id="@+id/profileBirthdate" android:layout_weight="1"
                     android:textSize="16sp" android:textColor="@color/white" android:textAlignment="viewEnd"/>
         </LinearLayout>
         <View
@@ -99,16 +99,16 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="10dp">
+                android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
+                android:paddingEnd="10dp">
             <TextView
                     android:text="Identity Number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView17" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
             <TextView
-                    android:text="56304897566"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:id="@+id/textView18" android:layout_weight="1"
+                    android:layout_height="wrap_content" android:id="@+id/profileIdentity" android:layout_weight="1"
                     android:textAlignment="viewEnd" android:textColor="@color/white" android:textSize="16sp"/>
         </LinearLayout>
         <View
@@ -176,7 +176,7 @@
                 app:boxBackgroundColor="#1A1A45"
                 app:boxStrokeColor="@color/white" app:hintTextColor="@color/white"
                 android:textColorHint="@color/white"
-                android:hint="@string/hint_password"
+                android:hint="@string/hint_password_again"
                 app:layout_constraintStart_toStartOf="@+id/email_til"
                 app:layout_constraintEnd_toEndOf="@+id/email_til"
                 app:layout_constraintTop_toBottomOf="@+id/email_til" android:id="@+id/personalInfo_password_again_til"
@@ -197,7 +197,7 @@
                 android:backgroundTint="@color/turquois"
                 android:layout_gravity="center"/>
         <Button
-                android:text="Exıt Account"
+                android:text="Logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/exitAccountButtom"
                 android:backgroundTint="@android:color/holo_red_dark"

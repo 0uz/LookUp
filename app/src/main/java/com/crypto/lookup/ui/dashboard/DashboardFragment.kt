@@ -74,7 +74,6 @@ class DashboardFragment : Fragment() {
         })
 
 
-
         binding.dashboardAll.setOnClickListener{
             binding.subsLayout.isVisible = false
             binding.coinLayout.isVisible = true

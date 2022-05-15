@@ -2,6 +2,7 @@ package com.crypto.lookup.ui.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.crypto.lookup.ui.login.UserViewModel
 import com.crypto.lookup.utils.Validation
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import java.text.SimpleDateFormat
 
 class ProfileFragment : Fragment() {
@@ -60,6 +62,9 @@ class ProfileFragment : Fragment() {
         buttonLogout()
         buttonEmailUpdate()
         buttonPasswordUpdate()
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            Log.w("TOKEN", it)
+        }
     }
 
     fun textInputEmailCheck() {

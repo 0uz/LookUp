@@ -97,6 +97,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     binding.loginEmail.text.toString(),
                     binding.loginPassword.text.toString()
                 )
+
+                binding.loginFail.visibility = View.INVISIBLE
+                binding.LoginLoginButton.isEnabled = false
+                binding.LoginLoginButton.visibility = View.INVISIBLE
+                binding.loginButtonPB.visibility = View.VISIBLE
+
                 val intent = Intent(activity, MainActivity::class.java)
                 val bundle = Bundle()
                 bundle.putSerializable("user", user)
@@ -106,6 +112,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
             override fun onFailed(e: Exception) {
+                binding.LoginLoginButton.isEnabled = true
+                binding.loginFail.visibility = View.VISIBLE
+                binding.LoginLoginButton.visibility = View.VISIBLE
+                binding.loginButtonPB.visibility = View.INVISIBLE
 
             }
         })

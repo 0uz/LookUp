@@ -32,6 +32,7 @@
     <string name="updatePasswordError">Error while updating password</string>
     <string name="hint_old_password">Old Password</string>
     <string name="dontMatch">Does not match old password</string>
+    <string name="loginFail">Email or Password is wrong</string>
     <!-- Strings used for fragments for navigation -->
 
 

@@ -52,7 +52,8 @@ class DashboardViewModel : ViewModel() {
         GlobalScope.launch {
             val client: BinanceApiRestClient = factory.newRestClient()
             for (coin in currentUser.subscribedCoins) {
-                y.add(Coin(coin, client.getPrice(coin).price.toFloat()))
+                val coinData = client.get24HrPriceStatistics(coin)
+                y.add(Coin(coin, coinData.lastPrice.toFloat()))
             }
             subscribedCoinData.postValue(CoinList(y))
             setCoinListData()

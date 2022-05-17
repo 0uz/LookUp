@@ -51,7 +51,7 @@ class RegisterFragment : Fragment() {
         navController = findNavController()
         setValidationListeners()
         //TODO test data remove
-        binding.email.setText("test2@test.com")
+        binding.email.setText("test@test.com")
         binding.password.setText("123456")
         binding.passwordAgain.setText("123456")
         binding.name.setText("Oguzhan")

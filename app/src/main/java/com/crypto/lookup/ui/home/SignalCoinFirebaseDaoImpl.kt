@@ -3,9 +3,10 @@ package com.crypto.lookup.ui.home
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.crypto.lookup.data.listeners.onGetDataListListener
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.sql.Date
+import kotlin.streams.toList
 
 class SignalCoinFirebaseDaoImpl : SignalCoinDao {
     private val db = Firebase.firestore.collection("signals")
@@ -13,14 +14,53 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun retrieve(signalCoin: ArrayList<String>, listener: onGetDataListListener) {
-        val currentTimeMillis = System.currentTimeMillis()
         if (signalCoin.size < 1) {
             listener.onSuccess(listOf())
             return
         }
+
+        if (signalCoin.size < 10) {
+            subCoinLoop(signalCoin, listener)
+            return
+        }
+
+        var counter = signalCoin.size / 10
+        if (signalCoin.size % 10 != 0) counter++
+        val sumSignalCoin: ArrayList<DocumentSnapshot> = arrayListOf()
+        val subListener = object : onGetDataListListener {
+            override fun onSuccess(data: List<DocumentSnapshot>) {
+                counter--
+                if (counter == 0) {
+                    listener.onSuccess(sumSignalCoin)
+                    return
+                }
+                sumSignalCoin.addAll(data)
+            }
+
+            override fun onFailed(e: Exception) {
+                listener.onFailed(e)
+            }
+
+        }
+
+        for (x in 0..signalCoin.size step 10) {
+            if (signalCoin.size == x) return
+            if (x + 10 > signalCoin.size)
+                subCoinLoop(signalCoin.subList(x, signalCoin.size).stream().toList(), subListener)
+            else
+                subCoinLoop(signalCoin.subList(x, x + 10).stream().toList(), subListener)
+
+        }
+
+
+    }
+
+    private fun subCoinLoop(signalCoin: List<String>, listener: onGetDataListListener) {
+//        val currentTimeMillis = System.currentTimeMillis()
         db.whereIn("symbol", signalCoin)
-            .whereGreaterThanOrEqualTo("openDate", Date(currentTimeMillis - 86400000))
-            .whereLessThanOrEqualTo("openDate", Date(currentTimeMillis))
+//            .whereGreaterThanOrEqualTo("openDate", Date(currentTimeMillis - 86400000))
+//            .whereLessThanOrEqualTo("openDate", Date(currentTimeMillis))
+            .whereEqualTo("isOpen", true)
             //TODO null olmayanlari cekme kismini ekle
             //TODO 10dan fazla kullanici ekleme durumu handle et
             .get().addOnSuccessListener {

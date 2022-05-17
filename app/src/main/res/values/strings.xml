@@ -33,6 +33,10 @@
     <string name="hint_old_password">Old Password</string>
     <string name="dontMatch">Does not match old password</string>
     <string name="loginFail">Email or Password is wrong</string>
+    <string name="openPositions">Open Positions:</string>
+    <string name="closedPositions">Closed Positions:</string>
+    <string name="totalProfit">Total Profit:</string>
+    <string name="cannotSelectCoin">Cannot Select over 10 coin</string>
     <!-- Strings used for fragments for navigation -->
 
 

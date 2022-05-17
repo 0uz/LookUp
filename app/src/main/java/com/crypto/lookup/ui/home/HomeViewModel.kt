@@ -1,6 +1,5 @@
 package com.crypto.lookup.ui.home
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binance.api.client.BinanceApiClientFactory
@@ -36,7 +35,6 @@ class HomeViewModel : ViewModel() {
     fun dataUpdate(timeInterval: Long, data: ArrayList<SignalCoin>): Job {
         return CoroutineScope(Dispatchers.Default).launch {
             while (NonCancellable.isActive) {
-                Log.w("DATA UPDATE", "")
                 data.forEach {
                     val coin = restClient.get24HrPriceStatistics(it.symbol)
                     it.currentPrice = coin.lastPrice.toFloat()

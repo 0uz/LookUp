@@ -6,20 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
-import com.crypto.lookup.data.User
 import com.crypto.lookup.data.UserFirebaseDaoImpl
 import com.crypto.lookup.data.UserService
 import com.crypto.lookup.data.listeners.onSaveDataListener
+import com.crypto.lookup.ui.login.UserViewModel
 import kotlinx.android.synthetic.main.dashboard_coin_recycler_row.view.*
 import java.util.*
 
 
-class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedCoinAdapter) : RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
+class AddCoinPriceAdapter(val subscribedCoinAdapter: SubscribedCoinAdapter, val userModeViewModel: UserViewModel) :
+    RecyclerView.Adapter<AddCoinPriceAdapter.CoinsWH>(), Filterable {
     var coinList = ArrayList<Coin>()
     var coinFilterList = ArrayList<Coin>()
     private val userService: UserService = UserService(UserFirebaseDaoImpl())
@@ -52,21 +54,33 @@ class AddCoinPriceAdapter(val user: User, val subscribedCoinAdapter: SubscribedC
         val dashboardButton = holder.itemView.dashboardButton
         dashboardButton.setCompoundDrawablesWithIntrinsicBounds(null,null,icon,null)
         dashboardButton.setOnClickListener {
-            userService.subscribeCoin(user.email, coin.name, object : onSaveDataListener {
-                @RequiresApi(Build.VERSION_CODES.N)
-                override fun onSuccess() {
-                    coinList.remove(coinList.get(position))
-                    coinFilterList.remove(coin)
-                    subscribedCoinAdapter.addCoin(coin)
-                    subscribedCoinAdapter.notifyDataSetChanged()
-                    notifyDataSetChanged()
-                }
+            if (userModeViewModel.getCurrentUser().subscribedCoins.size >= 10) {
+                Toast.makeText(
+                    holder.itemView.context,
+                    holder.itemView.context.getText(R.string.cannotSelectCoin),
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                userService.subscribeCoin(
+                    userModeViewModel.getCurrentUser().email,
+                    coin.name,
+                    object : onSaveDataListener {
+                        @RequiresApi(Build.VERSION_CODES.N)
+                        override fun onSuccess() {
+                            userModeViewModel.addCoin(coin)
+                            coinList.remove(coinList.get(position))
+                            coinFilterList.remove(coin)
+                            subscribedCoinAdapter.addCoin(coin)
+                            subscribedCoinAdapter.notifyDataSetChanged()
+                            notifyDataSetChanged()
+                        }
 
-                override fun onFailed(exception: Exception) {
-                    TODO("Not yet implemented")
-                }
+                        override fun onFailed(exception: Exception) {
+                            TODO("Not yet implemented")
+                        }
 
-            })
+                    })
+            }
         }
 
         holder.itemView.coinTextView.setOnClickListener{

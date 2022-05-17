@@ -1,5 +1,6 @@
 package com.crypto.lookup.ui.home
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +15,8 @@ import com.crypto.lookup.data.listeners.onGetDataListListener
 import com.crypto.lookup.databinding.FragmentHomeBinding
 import com.crypto.lookup.ui.login.UserViewModel
 import com.google.firebase.firestore.DocumentSnapshot
+import kotlinx.coroutines.Job
+import java.text.DecimalFormat
 
 class HomeFragment : Fragment() {
 
@@ -22,6 +25,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var signalCoinService: SignalCoinService
+    private var dataUpdate: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -39,6 +43,7 @@ class HomeFragment : Fragment() {
 
         binding.homeProgressBar.visibility = View.VISIBLE
         binding.signalScrollView.visibility = View.INVISIBLE
+        binding.homeInfoLayout.visibility = View.INVISIBLE
 
 
         val layoutManagerSignalCoin = LinearLayoutManager(context)
@@ -46,8 +51,17 @@ class HomeFragment : Fragment() {
         binding.signalRecylerView.adapter = homeViewModel.signalCoinAdapter
 
         initData()
-        homeViewModel.signalCoinListData.observe(viewLifecycleOwner) {
-            homeViewModel.setAdapterData(it)
+        homeViewModel.signalCoinListData.observe(viewLifecycleOwner) { data ->
+            homeViewModel.setAdapterData(data)
+            val df = DecimalFormat("#.##")
+            var sum: Float = 0F
+            data.signalCoins.forEach {
+                sum += (it.currentPrice - it.openPrice) / it.openPrice * 100
+            }
+            binding.totalProfit.text = "%" + df.format(sum)
+            binding.totalProfit.setTextColor(Color.GREEN)
+            if (sum < 0) binding.totalProfit.setTextColor(Color.RED)
+
         }
 
     }
@@ -56,6 +70,7 @@ class HomeFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
     }
+
 
     fun initData() {
         signalCoinService.retrieve(sharedViewModel.getCurrentUser().subscribedCoins, object : onGetDataListListener {
@@ -66,11 +81,26 @@ class HomeFragment : Fragment() {
                 data.forEach {
                     if (data.isNotEmpty()) coinData.add(it.toObject(SignalCoin::class.java)!!)
                 }
-                homeViewModel.dataUpdate(5000, coinData)
+
+//                val first8 = arrayListOf<SignalCoin>()
+//                first8.addAll(coinData.subList(0,8))
+//                homeViewModel.dataUpdate(5000, first8, true) TODO for optimize lazy
+
+                binding.totalOpenPosition.text = coinData.stream().filter { it.isOpen }.count().toString()
+                binding.totalClosedPosition.text = coinData.stream().filter { !it.isOpen }.count().toString()
+
+
+                if (coinData.size > 1) {
+                    binding.signalScrollView.visibility = View.VISIBLE
+                    binding.homeInfoLayout.visibility = View.VISIBLE
+                    binding.signalNoCoin.visibility = View.GONE
+                } else {
+                    binding.signalNoCoin.visibility = View.VISIBLE
+                }
                 binding.homeProgressBar.visibility = View.GONE
-                binding.signalScrollView.visibility = View.VISIBLE
-                if (coinData.size < 1) binding.signalNoCoin.visibility = View.VISIBLE
-                else binding.signalNoCoin.visibility = View.GONE
+
+
+                dataUpdate = homeViewModel.dataUpdate(5000, coinData)
             }
 
             override fun onFailed(e: Exception) {
@@ -82,5 +112,6 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        dataUpdate?.cancel()
     }
 }

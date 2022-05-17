@@ -34,7 +34,7 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dashboardViewModel.initializeAdaptersAndUser(sharedViewModel.getCurrentUser())
+        dashboardViewModel.initializeAdaptersAndUser(sharedViewModel.getCurrentUser(), sharedViewModel)
 
         val layoutManagerAddCoin = LinearLayoutManager(context)
         val layoutManagerSubscribed = LinearLayoutManager(context)

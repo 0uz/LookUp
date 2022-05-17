@@ -57,7 +57,6 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
 
     private fun subCoinLoop(signalCoin: List<String>, listener: onGetDataListListener) {
 //        val currentTimeMillis = System.currentTimeMillis()
-        if (signalCoin.size < 0) return
         db.whereIn("symbol", signalCoin)
 //            .whereGreaterThanOrEqualTo("openDate", Date(currentTimeMillis - 86400000))
 //            .whereLessThanOrEqualTo("openDate", Date(currentTimeMillis))

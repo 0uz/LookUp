@@ -146,6 +146,10 @@ class UserFirebaseDaoImpl : UserDao {
         }
     }
 
+    override fun updateToken(user: User, newToken: String) {
+        db.document(user.email).update("phoneID", newToken)
+    }
+
     private fun updateAuthEmail(newEmail: String, listener: onSaveDataListener) {
         auth.currentUser!!.updateEmail(newEmail)
         auth.updateCurrentUser(auth.currentUser!!).addOnSuccessListener {

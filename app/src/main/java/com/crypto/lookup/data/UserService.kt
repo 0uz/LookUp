@@ -47,4 +47,8 @@ class UserService(private val userDao: UserDao) {
     fun checkPassword(oldPassword: String, listener: onSaveDataListener) {
         userDao.checkPassword(oldPassword, listener)
     }
+
+    fun updateToken(user: User, newToken: String) {
+        userDao.updateToken(user, newToken)
+    }
 }

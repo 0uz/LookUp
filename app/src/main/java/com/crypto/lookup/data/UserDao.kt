@@ -16,4 +16,5 @@ interface UserDao {
     fun updateEmail(newEmail: String, currentUser: User, listener: onSaveDataListener)
     fun updatePassword(newPassword: String, listener: onSaveDataListener)
     fun checkPassword(oldPassword: String, listener: onSaveDataListener)
+    fun updateToken(user: User, newToken: String)
 }

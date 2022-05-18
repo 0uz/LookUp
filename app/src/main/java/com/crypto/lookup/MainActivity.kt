@@ -1,5 +1,6 @@
 package com.crypto.lookup
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -36,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
 
-
         setContentView(binding.root)
         val navView: BottomNavigationView = binding.navView
         navView.itemActiveIndicatorColor
@@ -51,8 +51,14 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
 
-
         userService = UserService(UserFirebaseDaoImpl())
+
+        val newToken = getSharedPreferences(this.packageName, Context.MODE_PRIVATE).getString("TOKEN", "DEFAULT")!!
+        if (newToken != "DEFAULT" && newToken != user.phoneID) {
+            userService.updateToken(user, newToken)
+
+        }
+
         userService.userCollection().document(user.email).addSnapshotListener { snapshot, e ->
             if (e != null) {
                 Log.w("Listening", "Listen failed.", e)

@@ -15,9 +15,9 @@ import com.google.firebase.ktx.Firebase
 class EntryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEntryBinding
     private val db = UserService(UserFirebaseDaoImpl())
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val currentUser = Firebase.auth.currentUser
         if (currentUser != null) {
             db.retrieve(currentUser.email.toString(), object : onGetDataListener {

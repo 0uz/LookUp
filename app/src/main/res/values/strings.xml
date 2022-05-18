@@ -37,6 +37,7 @@
     <string name="closedPositions">Closed Positions:</string>
     <string name="totalProfit">Total Profit:</string>
     <string name="cannotSelectCoin">Cannot Select over 10 coin</string>
+    <string name="errorWhileData">Error while data update</string>
     <!-- Strings used for fragments for navigation -->
 
 

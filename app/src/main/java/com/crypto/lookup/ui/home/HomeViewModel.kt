@@ -31,7 +31,6 @@ class HomeViewModel : ViewModel() {
     }
 
 
-    @OptIn(InternalCoroutinesApi::class)
     fun dataUpdate(timeInterval: Long, data: ArrayList<SignalCoin>): Job {
         return CoroutineScope(Dispatchers.Default).launch {
             while (NonCancellable.isActive) {

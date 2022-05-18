@@ -49,7 +49,6 @@ class HomeFragment : Fragment() {
         val layoutManagerSignalCoin = LinearLayoutManager(context)
         binding.signalRecylerView.layoutManager = layoutManagerSignalCoin
         binding.signalRecylerView.adapter = homeViewModel.signalCoinAdapter
-
         initData()
         homeViewModel.signalCoinListData.observe(viewLifecycleOwner) { data ->
             homeViewModel.setAdapterData(data)
@@ -62,8 +61,16 @@ class HomeFragment : Fragment() {
             binding.totalProfit.setTextColor(Color.GREEN)
             if (sum < 0) binding.totalProfit.setTextColor(Color.RED)
 
-        }
+            if (data.signalCoins.size > 1) {
+                binding.signalScrollView.visibility = View.VISIBLE
+                binding.homeInfoLayout.visibility = View.VISIBLE
+                binding.signalNoCoin.visibility = View.GONE
+            } else {
+                binding.signalNoCoin.visibility = View.VISIBLE
+            }
+            binding.homeProgressBar.visibility = View.GONE
 
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,17 +97,9 @@ class HomeFragment : Fragment() {
                 binding.totalClosedPosition.text = coinData.stream().filter { !it.isOpen }.count().toString()
 
 
-                if (coinData.size > 1) {
-                    binding.signalScrollView.visibility = View.VISIBLE
-                    binding.homeInfoLayout.visibility = View.VISIBLE
-                    binding.signalNoCoin.visibility = View.GONE
-                } else {
-                    binding.signalNoCoin.visibility = View.VISIBLE
-                }
-                binding.homeProgressBar.visibility = View.GONE
-
 
                 dataUpdate = homeViewModel.dataUpdate(5000, coinData)
+
             }
 
             override fun onFailed(e: Exception) {

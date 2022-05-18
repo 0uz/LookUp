@@ -12,6 +12,11 @@ interface onGetDataListListener {
     fun onFailed(e: Exception)
 }
 
+interface onGetNoDataListener {
+    fun onSuccess()
+    fun onFailed(e: Exception)
+}
+
 interface onSaveDataListener {
     fun onSuccess()
     fun onFailed(exception: Exception)

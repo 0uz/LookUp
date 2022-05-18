@@ -152,7 +152,7 @@ class ProfileFragment : Fragment() {
         if (!(binding.profilePasswordTil.isErrorEnabled && binding.profilePasswordAgainTil.isErrorEnabled)) {
             userService.updatePassword(binding.profilePassword.text.toString(), object : onSaveDataListener {
                 override fun onSuccess() {
-                    logout()
+//                    logout()
                 }
 
                 override fun onFailed(exception: Exception) {

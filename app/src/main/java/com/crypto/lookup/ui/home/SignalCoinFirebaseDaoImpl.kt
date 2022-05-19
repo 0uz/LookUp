@@ -60,7 +60,7 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
         db.whereIn("symbol", signalCoin)
 //            .whereGreaterThanOrEqualTo("openDate", Date(currentTimeMillis - 86400000))
 //            .whereLessThanOrEqualTo("openDate", Date(currentTimeMillis))
-            .whereEqualTo("isOpen", true)
+//            .whereEqualTo("isOpen", true)
             //TODO null olmayanlari cekme kismini ekle
             //TODO 10dan fazla kullanici ekleme durumu handle et
             .get().addOnSuccessListener {

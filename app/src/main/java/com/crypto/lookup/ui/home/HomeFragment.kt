@@ -3,7 +3,6 @@ package com.crypto.lookup.ui.home
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -83,7 +82,6 @@ class HomeFragment : Fragment() {
         signalCoinService.retrieve(sharedViewModel.getCurrentUser().subscribedCoins, object : onGetDataListListener {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onSuccess(data: List<DocumentSnapshot>) {
-                Log.w("DATA", data.toString())
                 val coinData = ArrayList<SignalCoin>()
                 data.forEach {
                     if (data.isNotEmpty()) coinData.add(it.toObject(SignalCoin::class.java)!!)
@@ -93,8 +91,8 @@ class HomeFragment : Fragment() {
 //                first8.addAll(coinData.subList(0,8))
 //                homeViewModel.dataUpdate(5000, first8, true) TODO for optimize lazy
 
-                binding.totalOpenPosition.text = coinData.stream().filter { it.isOpen }.count().toString()
-                binding.totalClosedPosition.text = coinData.stream().filter { !it.isOpen }.count().toString()
+                binding.totalOpenPosition.text = coinData.stream().filter { it.isOpen == true }.count().toString()
+                binding.totalClosedPosition.text = coinData.stream().filter { it.isOpen == false }.count().toString()
 
 
 

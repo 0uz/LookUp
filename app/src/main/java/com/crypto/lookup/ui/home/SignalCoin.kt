@@ -12,7 +12,7 @@ data class SignalCoin(
     var openDate: Date? = null,
     var closeDate: Date? = null,
     @field:JvmField
-    var isOpen: Boolean? = true,
+    var isOpen: Boolean = true,
     var lastStopPrice: Float = 0F,
     @get:Exclude
     var currentPrice: Float = 0F,

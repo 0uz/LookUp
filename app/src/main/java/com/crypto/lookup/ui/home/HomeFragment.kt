@@ -52,13 +52,20 @@ class HomeFragment : Fragment() {
         homeViewModel.signalCoinListData.observe(viewLifecycleOwner) { data ->
             homeViewModel.setAdapterData(data)
             val df = DecimalFormat("#.##")
-            var sum: Float = 0F
+            var currentSum: Float = 0F
+            var closedSum: Float = 0F
             data.signalCoins.forEach {
-                sum += (it.currentPrice - it.openPrice) / it.openPrice * 100
+                if (it.isOpen) {
+                    currentSum += (it.currentPrice - it.openPrice) / it.openPrice * 100
+                } else {
+                    closedSum += (it.closePrice!! - it.openPrice) / it.openPrice * 100
+                }
             }
-            binding.totalProfit.text = "%" + df.format(sum)
-            binding.totalProfit.setTextColor(Color.GREEN)
-            if (sum < 0) binding.totalProfit.setTextColor(Color.RED)
+            binding.totalCurrentProfit.text = "%" + df.format(currentSum)
+            binding.totalCurrentProfit.setTextColor(if (currentSum > 0) Color.GREEN else Color.RED)
+            binding.totalProfit.text = "%" + df.format(closedSum)
+            binding.totalProfit.setTextColor(if (closedSum > 0) Color.GREEN else Color.RED)
+
 
             if (data.signalCoins.size > 1) {
                 binding.signalScrollView.visibility = View.VISIBLE
@@ -97,6 +104,7 @@ class HomeFragment : Fragment() {
 
 
                 dataUpdate = homeViewModel.dataUpdate(5000, coinData)
+
 
             }
 

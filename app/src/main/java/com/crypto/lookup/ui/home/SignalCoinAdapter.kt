@@ -33,33 +33,40 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
         val signalCoin = signalCoins.get(position)
         holder.itemView.signalCoinName.text = signalCoin.symbol
         val df = DecimalFormat("#.##")
-        holder.itemView.signalCoinCurrentPrice.text =
-            signalCoin.currentPrice.toString() + "$ %" + df.format(((signalCoin.currentPrice - signalCoin.openPrice) / signalCoin.openPrice) * 100)
-        holder.itemView.signalCoinOpenPrice.text = signalCoin.openPrice.toString() + "$"
-        holder.itemView.signalOpenDate.text = SimpleDateFormat("dd/mm/yyyy hh:mm").format(signalCoin.openDate)
 
-        if (signalCoin.currentPrice > signalCoin.openPrice) {
-            holder.itemView.signalCoinCurrentPrice.setTextColor(Color.GREEN)
-            holder.itemView.signalImage.setImageDrawable(
-                ResourcesCompat.getDrawable(
-                    holder.itemView.resources,
-                    R.drawable.increase,
-                    null
-                )
-            )
+        holder.itemView.signalCoinOpenPrice.text = signalCoin.openPrice.toString() + "$"
+        val simpleDateFormat = SimpleDateFormat("dd/mm/yyyy hh:mm")
+        holder.itemView.signalOpenDate.text = simpleDateFormat.format(signalCoin.openDate)
+
+
+        var isPositive: Boolean;
+        if (signalCoin.isOpen) {
+            holder.itemView.signalCoinCurrentPrice.text =
+                signalCoin.currentPrice.toString() + "$ %" + df.format(((signalCoin.currentPrice - signalCoin.openPrice) / signalCoin.openPrice) * 100)
+            isPositive = signalCoin.currentPrice > signalCoin.openPrice
+            holder.itemView.signalCloseDate.visibility = View.GONE
+            holder.itemView.isClosed.visibility = View.GONE
         } else {
-            holder.itemView.signalCoinCurrentPrice.setTextColor(Color.RED)
-            holder.itemView.signalImage.setImageDrawable(
-                ResourcesCompat.getDrawable(
-                    holder.itemView.resources,
-                    R.drawable.decrease,
-                    null
-                )
-            )
+            holder.itemView.signalCoinCurrentPrice.text =
+                signalCoin.closePrice.toString() + "$ %" + df.format(((signalCoin.closePrice!! - signalCoin.openPrice) / signalCoin.openPrice) * 100)
+            isPositive = signalCoin.closePrice!! > signalCoin.openPrice
+            holder.itemView.isClosed.visibility = View.VISIBLE
+            holder.itemView.signalCloseDate.text = simpleDateFormat.format(signalCoin.closeDate)
+            holder.itemView.signalCloseDate.visibility = View.VISIBLE
         }
 
 
-    }
 
+        holder.itemView.signalCoinCurrentPrice.setTextColor(if (isPositive) Color.GREEN else Color.RED)
+        holder.itemView.isClosed.setTextColor(if (isPositive) Color.GREEN else Color.RED)
+        holder.itemView.signalImage.setImageDrawable(
+            ResourcesCompat.getDrawable(
+                holder.itemView.resources,
+                if (isPositive) R.drawable.increase else R.drawable.decrease,
+                null
+            )
+        )
+
+    }
 
 }

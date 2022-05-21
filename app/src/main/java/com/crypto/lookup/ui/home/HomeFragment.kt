@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crypto.lookup.data.listeners.onGetDataListListener
+import com.crypto.lookup.data.listeners.onGetNoDataListener
 import com.crypto.lookup.databinding.FragmentHomeBinding
 import com.crypto.lookup.ui.login.UserViewModel
 import com.google.firebase.firestore.DocumentSnapshot
@@ -25,6 +26,8 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var signalCoinService: SignalCoinService
     private var dataUpdate: Job? = null
+    private var updatedSignals = 0L
+    private var signalSize = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,6 +40,7 @@ class HomeFragment : Fragment() {
         return root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -76,7 +80,15 @@ class HomeFragment : Fragment() {
             }
             binding.homeProgressBar.visibility = View.GONE
 
+            binding.liveDataPB.setProgress(((updatedSignals * 100) / signalSize).toInt(), true)
+            if (signalSize == updatedSignals) {
+                binding.liveDataPB.visibility = View.GONE
+                binding.totalCurrentProfit.visibility = View.VISIBLE
+
+            }
+
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,6 +105,7 @@ class HomeFragment : Fragment() {
                 data.forEach {
                     if (data.isNotEmpty()) coinData.add(it.toObject(SignalCoin::class.java)!!)
                 }
+                signalSize = coinData.stream().filter { it.isOpen }.count()
 
 //                val first8 = arrayListOf<SignalCoin>()
 //                first8.addAll(coinData.subList(0,8))
@@ -103,7 +116,16 @@ class HomeFragment : Fragment() {
 
 
 
-                dataUpdate = homeViewModel.dataUpdate(5000, coinData)
+                dataUpdate = homeViewModel.dataUpdate(5000, coinData, object : onGetNoDataListener {
+                    override fun onSuccess() {
+                        updatedSignals++
+                    }
+
+                    override fun onFailed(e: Exception) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
 
 
             }

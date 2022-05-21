@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.crypto.lookup.data.listeners.onGetDataListListener
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlin.streams.toList
@@ -58,6 +59,7 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
     private fun subCoinLoop(signalCoin: List<String>, listener: onGetDataListListener) {
 //        val currentTimeMillis = System.currentTimeMillis()
         db.whereIn("symbol", signalCoin)
+            .orderBy("closeDate", Query.Direction.DESCENDING)
 //            .whereGreaterThanOrEqualTo("openDate", Date(currentTimeMillis - 86400000))
 //            .whereLessThanOrEqualTo("openDate", Date(currentTimeMillis))
 //            .whereEqualTo("isOpen", true)

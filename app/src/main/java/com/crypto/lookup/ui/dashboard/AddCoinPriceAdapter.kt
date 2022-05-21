@@ -48,11 +48,11 @@ class AddCoinPriceAdapter(val subscribedCoinAdapter: SubscribedCoinAdapter, val 
 
     override fun onBindViewHolder(holder: CoinsWH, position: Int) {
         val coin = coinFilterList.get(position)
-        holder.itemView.coinTextView.text = coin.name
-        holder.itemView.priceTextView.text = coin.price.toString()
+        holder.itemView.coinTextView.text = coin.name.subSequence(0, coin.name.length - 4).toString() + " / USDT"
+        holder.itemView.priceTextView.text = coin.price.toString() + "$"
         val icon = holder.itemView.context.resources.getDrawable(R.drawable.subscribe_heart)
         val dashboardButton = holder.itemView.dashboardButton
-        dashboardButton.setCompoundDrawablesWithIntrinsicBounds(null,null,icon,null)
+        dashboardButton.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null)
         dashboardButton.setOnClickListener {
             if (userModeViewModel.getCurrentUser().subscribedCoins.size >= 10) {
                 Toast.makeText(

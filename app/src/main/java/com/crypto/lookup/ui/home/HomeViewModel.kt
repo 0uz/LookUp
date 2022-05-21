@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binance.api.client.BinanceApiClientFactory
+import com.crypto.lookup.data.listeners.onGetNoDataListener
 import kotlinx.coroutines.*
 
 class HomeViewModel : ViewModel() {
@@ -35,14 +36,15 @@ class HomeViewModel : ViewModel() {
 
 
     @RequiresApi(Build.VERSION_CODES.N)
-    fun dataUpdate(timeInterval: Long, data: ArrayList<SignalCoin>): Job {
+    fun dataUpdate(timeInterval: Long, data: ArrayList<SignalCoin>, listener: onGetNoDataListener): Job {
         return CoroutineScope(Dispatchers.Default).launch {
             while (NonCancellable.isActive) {
                 data.stream().filter { it.isOpen }.forEach {
                     val coin = restClient.get24HrPriceStatistics(it.symbol)
                     it.currentPrice = coin.lastPrice.toFloat()
+                    signalCoinListData.postValue(SignalCoinList(data))
+                    listener.onSuccess()
                 }
-                signalCoinListData.postValue(SignalCoinList(data))
                 delay(timeInterval)
                 Log.w("DATA DELAY", data.toString())
             }

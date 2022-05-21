@@ -31,7 +31,8 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: SignalWH, position: Int) {
         val signalCoin = signalCoins.get(position)
-        holder.itemView.signalCoinName.text = signalCoin.symbol
+        holder.itemView.signalCoinName.text =
+            signalCoin.symbol.subSequence(0, signalCoin.symbol.length - 4).toString() + " / USDT"
         val df = DecimalFormat("#.##")
 
         holder.itemView.signalCoinOpenPrice.text = signalCoin.openPrice.toString() + "$"
@@ -66,7 +67,6 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
                 null
             )
         )
-
     }
 
 }

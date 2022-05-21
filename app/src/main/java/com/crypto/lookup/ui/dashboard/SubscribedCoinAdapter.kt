@@ -43,11 +43,11 @@ class SubscribedCoinAdapter(val user: User) : RecyclerView.Adapter<SubscribedCoi
 
     override fun onBindViewHolder(holder: SubscribedCoinsWH, position: Int) {
         val coin = coinFilterList.get(position)
-        holder.itemView.coinTextView.text = coin.name
-        holder.itemView.priceTextView.text = coin.price.toString()
+        holder.itemView.coinTextView.text = coin.name.subSequence(0, coin.name.length - 4).toString() + " / USDT"
+        holder.itemView.priceTextView.text = coin.price.toString() + "$"
         val dashboardButton: Button = holder.itemView.dashboardButton
         val icon = holder.itemView.context.resources.getDrawable(R.drawable.unsubscribe_heart)
-        dashboardButton.setCompoundDrawablesWithIntrinsicBounds(null,null,icon,null)
+        dashboardButton.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null)
         holder.itemView.dashboardButton.setOnClickListener {
             userService.unsubscribeCoin(user.email, coin.name, object : onSaveDataListener {
                 @RequiresApi(Build.VERSION_CODES.N)

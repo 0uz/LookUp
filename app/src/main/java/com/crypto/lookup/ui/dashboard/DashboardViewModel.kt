@@ -44,8 +44,6 @@ class DashboardViewModel : ViewModel() {
 
 
     fun setSubscribedCoinsData() {
-        println("COINLER UPDATELENDI")
-        println(currentUser.subscribedCoins)
         val y = arrayListOf<Coin>()
         val factory: BinanceApiClientFactory = BinanceApiClientFactory.newInstance(
             "QaTHifDPd0jcU4NlNwcf8DptOykOJISTtpcLqY5AC3UiKDB3yOGNGmxuhlcmmiN9",

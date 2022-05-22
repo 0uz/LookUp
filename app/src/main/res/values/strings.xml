@@ -40,6 +40,9 @@
     <string name="cannotSelectCoin">Cannot Select over 10 coin</string>
     <string name="errorWhileData">Error while data update</string>
     <string name="closed">CLOSED</string>
+    <string name="fearIndex">Fear Index:</string>
+    <string name="buyOpportunity">Buy Opportunity</string>
+    <string name="sellOpportunity">Sell Opportunity</string>
     <!-- Strings used for fragments for navigation -->
 
 

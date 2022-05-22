@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.crypto.lookup.R
 import com.crypto.lookup.data.listeners.onGetDataListListener
 import com.crypto.lookup.data.listeners.onGetNoDataListener
 import com.crypto.lookup.databinding.FragmentHomeBinding
@@ -53,6 +54,14 @@ class HomeFragment : Fragment() {
         binding.signalRecylerView.layoutManager = layoutManagerSignalCoin
         binding.signalRecylerView.adapter = homeViewModel.signalCoinAdapter
         initData()
+        homeViewModel.initFearIndex()
+
+        homeViewModel.fearIndex.observe(viewLifecycleOwner) {
+            var text = it.index.toString() + " " + it.classification
+            text += if (it.index < 50) " - " + getText(R.string.buyOpportunity) else " - " + getText(R.string.sellOpportunity)
+            binding.fearIndex.text = text
+        }
+
         homeViewModel.signalCoinListData.observe(viewLifecycleOwner) { data ->
             homeViewModel.setAdapterData(data)
             val df = DecimalFormat("#.##")
@@ -80,7 +89,7 @@ class HomeFragment : Fragment() {
             }
             binding.homeProgressBar.visibility = View.GONE
             if (signalSize != 0L) binding.liveDataPB.setProgress(((updatedSignals * 100) / signalSize).toInt(), true)
-            if (signalSize == updatedSignals) {
+            if (updatedSignals >= signalSize) {
                 binding.liveDataPB.visibility = View.GONE
                 binding.totalCurrentProfit.visibility = View.VISIBLE
                 updatedSignals = 0L

@@ -5,8 +5,12 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binance.api.client.BinanceApiClientFactory
+import com.crypto.lookup.data.Fear
 import com.crypto.lookup.data.listeners.onGetNoDataListener
 import kotlinx.coroutines.*
+import org.json.JSONObject
+import org.json.JSONTokener
+import java.net.URL
 
 class HomeViewModel : ViewModel() {
     var signalCoinListData: MutableLiveData<SignalCoinList>
@@ -17,10 +21,12 @@ class HomeViewModel : ViewModel() {
     )
     private val restClient = factory.newRestClient()
     private val signalCoinService = SignalCoinService(SignalCoinFirebaseDaoImpl())
+    var fearIndex: MutableLiveData<Fear>
 
     init {
         signalCoinListData = MutableLiveData()
         signalCoinAdapter = SignalCoinAdapter()
+        fearIndex = MutableLiveData()
     }
 
     fun fakeData() {
@@ -50,6 +56,18 @@ class HomeViewModel : ViewModel() {
         }
     }
 
+    fun initFearIndex(): Job {
+        return CoroutineScope(Dispatchers.Default).launch {
+            val response = URL("https://api.alternative.me/fng/").readText()
+            val jsonObject = JSONTokener(response).nextValue() as JSONObject
+            var fear = Fear(
+                jsonObject.getJSONArray("data").getJSONObject(0).getInt("value"),
+                jsonObject.getJSONArray("data").getJSONObject(0).getString("value_classification")
+            )
+            fearIndex.postValue(fear)
+        }
 
+
+    }
 
 }

@@ -1,7 +1,6 @@
 package com.crypto.lookup.ui.home
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,8 +44,8 @@ class HomeViewModel : ViewModel() {
                     signalCoinListData.postValue(SignalCoinList(data))
                     listener.onSuccess()
                 }
+                signalCoinListData.postValue(SignalCoinList(data))
                 delay(timeInterval)
-                Log.w("DATA DELAY", data.toString())
             }
         }
     }

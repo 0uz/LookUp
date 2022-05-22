@@ -71,7 +71,7 @@ class HomeFragment : Fragment() {
             binding.totalProfit.setTextColor(if (closedSum > 0) Color.GREEN else Color.RED)
 
 
-            if (data.signalCoins.size > 1) {
+            if (data.signalCoins.size > 0) {
                 binding.signalScrollView.visibility = View.VISIBLE
                 binding.homeInfoLayout.visibility = View.VISIBLE
                 binding.signalNoCoin.visibility = View.GONE
@@ -79,8 +79,7 @@ class HomeFragment : Fragment() {
                 binding.signalNoCoin.visibility = View.VISIBLE
             }
             binding.homeProgressBar.visibility = View.GONE
-
-            binding.liveDataPB.setProgress(((updatedSignals * 100) / signalSize).toInt(), true)
+            if (signalSize != 0L) binding.liveDataPB.setProgress(((updatedSignals * 100) / signalSize).toInt(), true)
             if (signalSize == updatedSignals) {
                 binding.liveDataPB.visibility = View.GONE
                 binding.totalCurrentProfit.visibility = View.VISIBLE
@@ -107,9 +106,6 @@ class HomeFragment : Fragment() {
                 }
                 signalSize = coinData.stream().filter { it.isOpen }.count()
 
-//                val first8 = arrayListOf<SignalCoin>()
-//                first8.addAll(coinData.subList(0,8))
-//                homeViewModel.dataUpdate(5000, first8, true) TODO for optimize lazy
 
                 binding.totalOpenPosition.text = coinData.stream().filter { it.isOpen == true }.count().toString()
                 binding.totalClosedPosition.text = coinData.stream().filter { it.isOpen == false }.count().toString()

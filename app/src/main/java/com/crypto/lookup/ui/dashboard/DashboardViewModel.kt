@@ -5,7 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.binance.api.client.BinanceApiClientFactory
 import com.binance.api.client.BinanceApiRestClient
 import com.crypto.lookup.data.User
+import com.crypto.lookup.data.listeners.onGetDataListener
+import com.crypto.lookup.ui.home.SignalCoinFirebaseDaoImpl
+import com.crypto.lookup.ui.home.SignalCoinService
 import com.crypto.lookup.ui.login.UserViewModel
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -16,6 +20,7 @@ class DashboardViewModel : ViewModel() {
     lateinit var addCoinPriceAdapter: AddCoinPriceAdapter
     lateinit var subscribedCoinAdapter: SubscribedCoinAdapter
     lateinit var currentUser: User
+    private val signalCoinService = SignalCoinService(SignalCoinFirebaseDaoImpl())
 
     init {
         coinListData = MutableLiveData()
@@ -58,6 +63,31 @@ class DashboardViewModel : ViewModel() {
             subscribedCoinData.postValue(CoinList(y))
             setCoinListData()
         }
+    }
+
+
+    fun setCoinListDataFirebase() {
+        val y = arrayListOf<Coin>()
+        val x = arrayListOf<Coin>()
+
+        currentUser.subscribedCoins.forEach {
+            x.add(Coin(it, 0F))
+        }
+        subscribedCoinData.postValue(CoinList(x))
+        signalCoinService.retrieveCoins(object : onGetDataListener {
+            override fun onSuccess(data: DocumentSnapshot) {
+                val list: ArrayList<String> = data.get("coins") as ArrayList<String>
+                list.forEach { coin ->
+                    if (x.all { it.name == coin })
+                        y.add(Coin(coin, 0F))
+                }
+                coinListData.postValue(CoinList(y))
+            }
+
+            override fun onFailed(e: Exception) {
+            }
+
+        })
     }
 
 

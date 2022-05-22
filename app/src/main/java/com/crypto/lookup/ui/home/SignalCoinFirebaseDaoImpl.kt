@@ -3,6 +3,7 @@ package com.crypto.lookup.ui.home
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.crypto.lookup.data.listeners.onGetDataListListener
+import com.crypto.lookup.data.listeners.onGetDataListener
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
@@ -11,6 +12,7 @@ import kotlin.streams.toList
 
 class SignalCoinFirebaseDaoImpl : SignalCoinDao {
     private val db = Firebase.firestore.collection("signals")
+    private val coinsCol = Firebase.firestore.collection("coins").document("coins")
     private val batch = Firebase.firestore.batch()
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -84,5 +86,13 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
 //            batch.set(db.document(), it)
 //        }
         batch.commit()
+    }
+
+    override fun retrieveCoins(listener: onGetDataListener) {
+        coinsCol.get().addOnSuccessListener {
+            listener.onSuccess(it)
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
     }
 }

@@ -44,13 +44,13 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
         if (signalCoin.isOpen) {
             holder.itemView.signalCoinCurrentPrice.text =
                 signalCoin.currentPrice.toString() + "$ %" + df.format(((signalCoin.currentPrice - signalCoin.openPrice) / signalCoin.openPrice) * 100)
-            isPositive = signalCoin.currentPrice > signalCoin.openPrice
+            isPositive = signalCoin.currentPrice >= signalCoin.openPrice
             holder.itemView.signalCloseDate.visibility = View.GONE
             holder.itemView.isClosed.visibility = View.GONE
         } else {
             holder.itemView.signalCoinCurrentPrice.text =
                 signalCoin.closePrice.toString() + "$ %" + df.format(((signalCoin.closePrice!! - signalCoin.openPrice) / signalCoin.openPrice) * 100)
-            isPositive = signalCoin.closePrice!! > signalCoin.openPrice
+            isPositive = signalCoin.closePrice!! >= signalCoin.openPrice
             holder.itemView.isClosed.visibility = View.VISIBLE
             holder.itemView.signalCloseDate.text = simpleDateFormat.format(signalCoin.closeDate)
             holder.itemView.signalCloseDate.visibility = View.VISIBLE

@@ -45,7 +45,8 @@ class DashboardFragment : Fragment() {
         binding.recyclerViewSubscribed.layoutManager = layoutManagerSubscribed
         binding.recyclerViewSubscribed.adapter = dashboardViewModel.subscribedCoinAdapter
 
-        dashboardViewModel.setSubscribedCoinsData()
+//        dashboardViewModel.setSubscribedCoinsData()
+        dashboardViewModel.setCoinListDataFirebase()
 
         dashboardViewModel.subscribedCoinData.observe(viewLifecycleOwner) {
             dashboardViewModel.setSubscribedCoinAdapterData(it.coins)

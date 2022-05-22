@@ -83,7 +83,8 @@ class HomeFragment : Fragment() {
             if (signalSize == updatedSignals) {
                 binding.liveDataPB.visibility = View.GONE
                 binding.totalCurrentProfit.visibility = View.VISIBLE
-
+                updatedSignals = 0L
+                signalSize = 0L
             }
 
         }

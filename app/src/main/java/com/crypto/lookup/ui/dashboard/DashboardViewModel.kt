@@ -61,7 +61,7 @@ class DashboardViewModel : ViewModel() {
                 y.add(Coin(coin, coinData.lastPrice.toFloat()))
             }
             subscribedCoinData.postValue(CoinList(y))
-            setCoinListData()
+//            setCoinListData()
         }
     }
 
@@ -73,15 +73,14 @@ class DashboardViewModel : ViewModel() {
         currentUser.subscribedCoins.forEach {
             x.add(Coin(it, 0F))
         }
-        subscribedCoinData.postValue(CoinList(x))
         signalCoinService.retrieveCoins(object : onGetDataListener {
             override fun onSuccess(data: DocumentSnapshot) {
                 val list: ArrayList<String> = data.get("coins") as ArrayList<String>
                 list.forEach { coin ->
-                    if (x.all { it.name == coin })
+                    if (x.all { it.name != coin })
                         y.add(Coin(coin, 0F))
                 }
-                coinListData.postValue(CoinList(y))
+                setCoinListData(x, y)
             }
 
             override fun onFailed(e: Exception) {
@@ -91,9 +90,7 @@ class DashboardViewModel : ViewModel() {
     }
 
 
-    fun setCoinListData() {
-        val y = arrayListOf<Coin>()
-        val x = arrayListOf<String>()
+    fun setCoinListData(subscribedCoins: ArrayList<Coin>, allCoins: ArrayList<Coin>) {
         val factory: BinanceApiClientFactory = BinanceApiClientFactory.newInstance(
             "QaTHifDPd0jcU4NlNwcf8DptOykOJISTtpcLqY5AC3UiKDB3yOGNGmxuhlcmmiN9",
             "P1DENk2ufvuvYHyFbv0iu7AvWFWIYmgRkJjN9YwXr3C0WxjCzmF9KOHlnMbi4fTj"
@@ -102,15 +99,16 @@ class DashboardViewModel : ViewModel() {
             val client: BinanceApiRestClient = factory.newRestClient()
             val bookTickers = client.bookTickers
             for (ticker in bookTickers) {
-                if (ticker.symbol.takeLast(4).equals("USDT") &&
-                    ticker.bidPrice.toFloat() != 0F &&
-                    !ticker.symbol.contains("UP", ignoreCase = true) &&
-                    !ticker.symbol.contains("DOWN", ignoreCase = true) &&
-                    subscribedCoinData.value!!.coins.all { !it.name.equals(ticker.symbol) }
-                )
-                    y.add(Coin(ticker.symbol, ticker.bidPrice.toFloat()))
+                subscribedCoins.forEach {
+                    if (it.name == ticker.symbol) it.price = ticker.bidPrice.toFloat()
+                }
+                allCoins.forEach {
+                    if (it.name == ticker.symbol) it.price = ticker.bidPrice.toFloat()
+                }
             }
-            coinListData.postValue(CoinList(y))
+            subscribedCoinData.postValue(CoinList(subscribedCoins))
+            coinListData.postValue(CoinList(allCoins))
+
         }
 
     }

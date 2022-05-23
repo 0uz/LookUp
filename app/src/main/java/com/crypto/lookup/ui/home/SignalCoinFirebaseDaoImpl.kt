@@ -13,6 +13,7 @@ import kotlin.streams.toList
 class SignalCoinFirebaseDaoImpl : SignalCoinDao {
     private val db = Firebase.firestore.collection("signals")
     private val coinsCol = Firebase.firestore.collection("coins").document("coins")
+    private val tweetCol = Firebase.firestore.collection("twitter")
     private val batch = Firebase.firestore.batch()
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -48,10 +49,11 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
 
         for (x in 0..signalCoin.size step 10) {
             if (signalCoin.size == x) return
-            if (x + 10 > signalCoin.size)
-                subCoinLoop(signalCoin.subList(x, signalCoin.size).stream().toList(), subListener)
-            else
-                subCoinLoop(signalCoin.subList(x, x + 10).stream().toList(), subListener)
+            if (x + 10 > signalCoin.size) subCoinLoop(
+                signalCoin.subList(x, signalCoin.size).stream().toList(),
+                subListener
+            )
+            else subCoinLoop(signalCoin.subList(x, x + 10).stream().toList(), subListener)
 
         }
 
@@ -60,8 +62,7 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
 
     private fun subCoinLoop(signalCoin: List<String>, listener: onGetDataListListener) {
 //        val currentTimeMillis = System.currentTimeMillis()
-        db.whereIn("symbol", signalCoin)
-            .orderBy("closeDate", Query.Direction.DESCENDING)
+        db.whereIn("symbol", signalCoin).orderBy("closeDate", Query.Direction.DESCENDING)
 //            .whereGreaterThanOrEqualTo("openDate", Date(currentTimeMillis - 86400000))
 //            .whereLessThanOrEqualTo("openDate", Date(currentTimeMillis))
 //            .whereEqualTo("isOpen", true)
@@ -91,6 +92,14 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
     override fun retrieveCoins(listener: onGetDataListener) {
         coinsCol.get().addOnSuccessListener {
             listener.onSuccess(it)
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
+    }
+
+    override fun retrieveTweet(listener: onGetDataListListener) {
+        tweetCol.orderBy("end", Query.Direction.DESCENDING).get().addOnSuccessListener {
+            listener.onSuccess(it.documents)
         }.addOnFailureListener {
             listener.onFailed(it)
         }

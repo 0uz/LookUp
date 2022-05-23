@@ -15,4 +15,8 @@ class SignalCoinService(private val signalCoinDao: SignalCoinDao) {
     fun fakeData() {
         signalCoinDao.fakeData() // TODO DELETE
     }
+
+    fun retrieveTweet(listener: onGetDataListListener) {
+        signalCoinDao.retrieveTweet(listener)
+    }
 }

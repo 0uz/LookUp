@@ -7,4 +7,5 @@ interface SignalCoinDao {
     fun retrieve(signalCoin: ArrayList<String>, listener: onGetDataListListener)
     fun fakeData() // TODO DELETE
     fun retrieveCoins(listener: onGetDataListener)
+    fun retrieveTweet(listener: onGetDataListListener)
 }

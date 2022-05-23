@@ -73,6 +73,15 @@ class DashboardViewModel : ViewModel() {
         currentUser.subscribedCoins.forEach {
             x.add(Coin(it, 0F))
         }
+//        signalCoinService.retrieveTweet(object : onGetDataListener{
+//            override fun onSuccess(data: DocumentSnapshot) {
+//            }
+//
+//            override fun onFailed(e: Exception) {
+//            }
+//
+//        })
+//
         signalCoinService.retrieveCoins(object : onGetDataListener {
             override fun onSuccess(data: DocumentSnapshot) {
                 val list: ArrayList<String> = data.get("coins") as ArrayList<String>
@@ -85,8 +94,8 @@ class DashboardViewModel : ViewModel() {
 
             override fun onFailed(e: Exception) {
             }
-
         })
+
     }
 
 

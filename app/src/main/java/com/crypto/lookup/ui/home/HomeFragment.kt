@@ -55,10 +55,32 @@ class HomeFragment : Fragment() {
         binding.signalRecylerView.adapter = homeViewModel.signalCoinAdapter
         initData()
         homeViewModel.initFearIndex()
+        homeViewModel.initTweetCount()
+
+        homeViewModel.tweetsBTC.observe(viewLifecycleOwner) {
+            if (it.size > 0) {
+                val average = it.stream().mapToInt { it.tweet_count }.sum() / it.size
+                val perc = (it[0].tweet_count - average) / average.toFloat() * 100
+                val df = DecimalFormat("#.##")
+                if (perc < 0) binding.tweetCountBTC.text = "Bitcoin reaction under in %" + df.format(perc * -1)
+                else binding.tweetCountBTC.text = "Bitcoin reaction up in %" + df.format(perc)
+                binding.tweetCountBTC.setTextColor(if (perc > 0) Color.GREEN else Color.RED)
+            }
+        }
+        homeViewModel.tweetsETH.observe(viewLifecycleOwner) {
+            if (it.size > 0) {
+                val average = it.stream().mapToInt { it.tweet_count }.sum() / it.size
+                val perc = (it[0].tweet_count - average) / average.toFloat() * 100
+                val df = DecimalFormat("#.##")
+                if (perc < 0) binding.tweetCountETH.text = "Ethereum reaction under in %" + df.format(perc * -1)
+                else binding.tweetCountETH.text = "Ethereum reaction up in %" + df.format(perc)
+                binding.tweetCountETH.setTextColor(if (perc > 0) Color.GREEN else Color.RED)
+            }
+        }
 
         homeViewModel.fearIndex.observe(viewLifecycleOwner) {
             var text = it.index.toString() + " " + it.classification
-            text += if (it.index < 50) " - " + getText(R.string.buyOpportunity) else " - " + getText(R.string.sellOpportunity)
+            text += if (it.index < 40) " - " + getText(R.string.buyOpportunity) else " - " + getText(R.string.sellOpportunity)
             binding.fearIndex.text = text
         }
 

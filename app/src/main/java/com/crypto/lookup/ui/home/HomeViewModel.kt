@@ -27,6 +27,8 @@ class HomeViewModel : ViewModel() {
     var fearIndex: MutableLiveData<Fear>
     var tweetsBTC: MutableLiveData<ArrayList<Tweet>>
     var tweetsETH: MutableLiveData<ArrayList<Tweet>>
+    var tweetsBTCDaily: MutableLiveData<Tweet>
+    var tweetsETHDaily: MutableLiveData<Tweet>
 
     init {
         signalCoinListData = MutableLiveData()
@@ -34,6 +36,8 @@ class HomeViewModel : ViewModel() {
         fearIndex = MutableLiveData()
         tweetsBTC = MutableLiveData()
         tweetsETH = MutableLiveData()
+        tweetsBTCDaily = MutableLiveData()
+        tweetsETHDaily = MutableLiveData()
     }
 
     fun fakeData() {
@@ -87,6 +91,25 @@ class HomeViewModel : ViewModel() {
                 }
                 tweetsBTC.postValue(tempBTC)
                 tweetsETH.postValue(tempETH)
+            }
+
+            override fun onFailed(e: Exception) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        signalCoinService.retrieveTweetDaily(object : onGetDataListListener {
+            override fun onSuccess(data: List<DocumentSnapshot>) {
+                var tempBTC = Tweet()
+                var tempETH = Tweet()
+                data.forEach {
+                    val tweet = it.toObject(Tweet::class.java)
+                    if (tweet!!.symbol == "BTCUSDT") tempBTC = tweet
+                    if (tweet.symbol == "ETHUSDT") tempETH = tweet
+                }
+                tweetsBTCDaily.postValue(tempBTC)
+                tweetsETHDaily.postValue(tempETH)
             }
 
             override fun onFailed(e: Exception) {

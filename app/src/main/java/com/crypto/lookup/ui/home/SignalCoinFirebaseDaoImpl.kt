@@ -15,6 +15,7 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
     private val coinsCol = Firebase.firestore.collection("coins").document("coins")
     private val tweetCol = Firebase.firestore.collection("twitter")
     private val batch = Firebase.firestore.batch()
+    private val dbCommon = Firebase.firestore
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun retrieve(signalCoin: ArrayList<String>, listener: onGetDataListListener) {
@@ -99,6 +100,14 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
 
     override fun retrieveTweet(listener: onGetDataListListener) {
         tweetCol.orderBy("end", Query.Direction.DESCENDING).get().addOnSuccessListener {
+            listener.onSuccess(it.documents)
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
+    }
+
+    override fun retrieveTweetDaily(listener: onGetDataListListener) {
+        dbCommon.collection("twitterDaily").get().addOnSuccessListener {
             listener.onSuccess(it.documents)
         }.addOnFailureListener {
             listener.onFailed(it)

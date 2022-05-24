@@ -19,4 +19,8 @@ class SignalCoinService(private val signalCoinDao: SignalCoinDao) {
     fun retrieveTweet(listener: onGetDataListListener) {
         signalCoinDao.retrieveTweet(listener)
     }
+
+    fun retrieveTweetDaily(listener: onGetDataListListener) {
+        signalCoinDao.retrieveTweetDaily(listener)
+    }
 }

@@ -60,7 +60,7 @@ class HomeFragment : Fragment() {
         homeViewModel.tweetsBTC.observe(viewLifecycleOwner) {
             if (it.size > 0) {
                 val average = it.stream().mapToInt { it.tweet_count }.sum() / it.size
-                val perc = (it[0].tweet_count - average) / average.toFloat() * 100
+                val perc = (homeViewModel.tweetsBTCDaily.value!!.tweet_count - average) / average.toFloat() * 100
                 val df = DecimalFormat("#.##")
                 if (perc < 0) binding.tweetCountBTC.text = "Bitcoin reaction under in %" + df.format(perc * -1)
                 else binding.tweetCountBTC.text = "Bitcoin reaction up in %" + df.format(perc)
@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
         homeViewModel.tweetsETH.observe(viewLifecycleOwner) {
             if (it.size > 0) {
                 val average = it.stream().mapToInt { it.tweet_count }.sum() / it.size
-                val perc = (it[0].tweet_count - average) / average.toFloat() * 100
+                val perc = (homeViewModel.tweetsETHDaily.value!!.tweet_count - average) / average.toFloat() * 100
                 val df = DecimalFormat("#.##")
                 if (perc < 0) binding.tweetCountETH.text = "Ethereum reaction under in %" + df.format(perc * -1)
                 else binding.tweetCountETH.text = "Ethereum reaction up in %" + df.format(perc)

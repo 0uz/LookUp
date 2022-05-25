@@ -51,7 +51,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val currentUser = sharedViewModel.getCurrentUser()
         binding.profileEmail.text = currentUser.email
-        binding.profileBirthdate.text = SimpleDateFormat("dd/mm/yyyy").format(currentUser.birthDate)
+        binding.profileBirthdate.text = SimpleDateFormat("dd/MM/yyy").format(currentUser.birthDate)
         binding.profileIdentity.text = currentUser.identityNumber.toString()
         binding.profilePhone.text = currentUser.phoneNumber.toString()
         binding.profileNameSur.text =

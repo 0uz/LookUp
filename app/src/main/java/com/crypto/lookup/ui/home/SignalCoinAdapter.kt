@@ -1,10 +1,11 @@
 package com.crypto.lookup.ui.home
 
-import android.annotation.SuppressLint
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.crypto.lookup.R
@@ -28,7 +29,7 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
         return signalCoins.size
     }
 
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: SignalWH, position: Int) {
         val signalCoin = signalCoins.get(position)
         holder.itemView.signalCoinName.text =
@@ -36,7 +37,7 @@ class SignalCoinAdapter : RecyclerView.Adapter<SignalCoinAdapter.SignalWH>() {
         val df = DecimalFormat("#.##")
 
         holder.itemView.signalCoinOpenPrice.text = signalCoin.openPrice.toString() + "$"
-        val simpleDateFormat = SimpleDateFormat("dd/mm/yyyy hh:mm")
+        val simpleDateFormat = SimpleDateFormat("dd/MM/yyy hh:mm")
         holder.itemView.signalOpenDate.text = simpleDateFormat.format(signalCoin.openDate)
 
 

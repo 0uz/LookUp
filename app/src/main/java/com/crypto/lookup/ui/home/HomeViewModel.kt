@@ -91,6 +91,7 @@ class HomeViewModel : ViewModel() {
                 }
                 tweetsBTC.postValue(tempBTC)
                 tweetsETH.postValue(tempETH)
+                initDailyTweetCount()
             }
 
             override fun onFailed(e: Exception) {
@@ -98,7 +99,9 @@ class HomeViewModel : ViewModel() {
             }
 
         })
+    }
 
+    private fun initDailyTweetCount() {
         signalCoinService.retrieveTweetDaily(object : onGetDataListListener {
             override fun onSuccess(data: List<DocumentSnapshot>) {
                 var tempBTC = Tweet()

@@ -112,6 +112,9 @@ class HomeFragment : Fragment() {
                 binding.signalNoCoin.visibility = View.VISIBLE
             }
             binding.homeProgressBar.visibility = View.GONE
+
+            binding.totalCurrentProfit.visibility = View.GONE
+            binding.liveDataPB.visibility = View.VISIBLE
             if (signalSize != 0L) binding.liveDataPB.setProgress(((updatedSignals * 100) / signalSize).toInt(), true)
             if (updatedSignals >= signalSize) {
                 binding.liveDataPB.visibility = View.GONE

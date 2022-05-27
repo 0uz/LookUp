@@ -61,6 +61,7 @@ class HomeViewModel : ViewModel() {
                     signalCoinListData.postValue(SignalCoinList(data))
                     listener.onSuccess()
                 }
+                data.sortByDescending { it.isOpen }
                 signalCoinListData.postValue(SignalCoinList(data))
                 delay(timeInterval)
             }

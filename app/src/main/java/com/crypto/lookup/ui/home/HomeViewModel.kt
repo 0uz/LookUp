@@ -1,12 +1,14 @@
 package com.crypto.lookup.ui.home
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binance.api.client.BinanceApiClientFactory
 import com.crypto.lookup.data.Fear
 import com.crypto.lookup.data.Tweet
+import com.crypto.lookup.data.TweetSent
 import com.crypto.lookup.data.listeners.onGetDataListListener
 import com.crypto.lookup.data.listeners.onGetNoDataListener
 import com.google.firebase.firestore.DocumentSnapshot
@@ -14,6 +16,7 @@ import kotlinx.coroutines.*
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.net.URL
+import kotlin.streams.toList
 
 class HomeViewModel : ViewModel() {
     var signalCoinListData: MutableLiveData<SignalCoinList>
@@ -30,6 +33,9 @@ class HomeViewModel : ViewModel() {
     var tweetsBTCDaily: MutableLiveData<Tweet>
     var tweetsETHDaily: MutableLiveData<Tweet>
 
+    var tweetSentBTCDaily: MutableLiveData<TweetSent>
+    var tweetSentETHDaily: MutableLiveData<TweetSent>
+
     init {
         signalCoinListData = MutableLiveData()
         signalCoinAdapter = SignalCoinAdapter()
@@ -38,6 +44,8 @@ class HomeViewModel : ViewModel() {
         tweetsETH = MutableLiveData()
         tweetsBTCDaily = MutableLiveData()
         tweetsETHDaily = MutableLiveData()
+        tweetSentBTCDaily = MutableLiveData()
+        tweetSentETHDaily = MutableLiveData()
     }
 
     fun fakeData() {
@@ -114,6 +122,31 @@ class HomeViewModel : ViewModel() {
                 }
                 tweetsBTCDaily.postValue(tempBTC)
                 tweetsETHDaily.postValue(tempETH)
+            }
+
+            override fun onFailed(e: Exception) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun initDailyTweetSentCount() {
+        signalCoinService.retrieveTweetSentDaily(object : onGetDataListListener {
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onSuccess(data: List<DocumentSnapshot>) {
+                var tempBTC = TweetSent()
+                var tempETH = TweetSent()
+                val dataTweetSent =
+                    data.stream().map { it.toObject(TweetSent::class.java) }.toList().sortedByDescending { it?.end }
+                for (i in 0..1) {
+                    if (dataTweetSent.get(i)!!.symbol == "BTCUSDT") tempBTC = dataTweetSent.get(i)!!
+                    if (dataTweetSent.get(i)!!.symbol == "ETHUSDT") tempETH = dataTweetSent.get(i)!!
+                }
+                Log.w("BTC DAILY", dataTweetSent.toString())
+
+                tweetSentBTCDaily.postValue(tempBTC)
+                tweetSentETHDaily.postValue(tempETH)
             }
 
             override fun onFailed(e: Exception) {

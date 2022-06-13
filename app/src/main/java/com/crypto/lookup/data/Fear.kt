@@ -14,3 +14,12 @@ data class Tweet(
     var start: Date? = null,
     var end: Date? = null
 )
+
+data class TweetSent(
+    var symbol: String = "",
+    var positive: Int = 0,
+    var negative: Int = 0,
+    var neutral: Int = 0,
+    var start: Date? = null,
+    var end: Date? = null
+)

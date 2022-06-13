@@ -3,6 +3,7 @@ package com.crypto.lookup.ui.home
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -56,6 +57,11 @@ class HomeFragment : Fragment() {
         initData()
         homeViewModel.initFearIndex()
         homeViewModel.initTweetCount()
+        homeViewModel.initDailyTweetSentCount()
+
+        homeViewModel.tweetSentBTCDaily.observe(viewLifecycleOwner) {
+            Log.w("BTC DAILY", it.toString())
+        }
 
         homeViewModel.tweetsBTCDaily.observe(viewLifecycleOwner) {
             if (homeViewModel.tweetsBTC.value!!.size > 0) {

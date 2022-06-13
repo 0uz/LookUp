@@ -9,4 +9,5 @@ interface SignalCoinDao {
     fun retrieveCoins(listener: onGetDataListener)
     fun retrieveTweet(listener: onGetDataListListener)
     fun retrieveTweetDaily(listener: onGetDataListListener)
+    fun retrieveTweetSentDaily(listener: onGetDataListListener)
 }

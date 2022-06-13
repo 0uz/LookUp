@@ -113,4 +113,12 @@ class SignalCoinFirebaseDaoImpl : SignalCoinDao {
             listener.onFailed(it)
         }
     }
+
+    override fun retrieveTweetSentDaily(listener: onGetDataListListener) {
+        dbCommon.collection("tweetSent").orderBy("end", Query.Direction.DESCENDING).get().addOnSuccessListener {
+            listener.onSuccess(it.documents)
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
+    }
 }

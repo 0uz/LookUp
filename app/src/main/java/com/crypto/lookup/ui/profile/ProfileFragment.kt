@@ -69,7 +69,7 @@ class ProfileFragment : Fragment() {
 
     fun textInputEmailCheck() {
         binding.profileUpdateEmail.addTextChangedListener {
-            if (Validation.isEmailValid(it.toString())) {
+            if (Validation.isEmailValid(it.toString()) || it.toString().isEmpty()) {
                 binding.profileEmailTil.isErrorEnabled = false
             } else {
                 binding.profileEmailTil.error = getString(R.string.email_valid)
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment() {
 
     fun textInputPasswordCheck() {
         binding.profilePassword.addTextChangedListener {
-            if (Validation.isTextValid(it.toString(), 10, 6)) {
+            if (Validation.isTextValid(it.toString(), 10, 6) || it.toString().isEmpty()) {
                 binding.profilePasswordTil.isErrorEnabled = false
             } else {
                 binding.profilePasswordTil.error = getString(R.string.password_valid)
@@ -87,8 +87,8 @@ class ProfileFragment : Fragment() {
         }
 
         binding.profilePasswordAgain.addTextChangedListener {
-            val passwordAgainValid = Validation.isTextValid(it.toString(), 10, 6)
-            val passwordEqual = binding.profilePassword.text.toString() == it.toString()
+            val passwordAgainValid = Validation.isTextValid(it.toString(), 10, 6) || it.toString().isEmpty()
+            val passwordEqual = binding.profilePassword.text.toString() == it.toString() || it.toString().isEmpty()
             if (!passwordAgainValid) binding.profilePasswordAgainTil.error = getString(R.string.password_valid)
             if (!passwordEqual) binding.profilePasswordAgainTil.error = getString(R.string.password_equal)
             if (passwordAgainValid && passwordEqual) binding.profilePasswordAgainTil.isErrorEnabled = false

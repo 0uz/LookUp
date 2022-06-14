@@ -64,7 +64,7 @@ class RegisterFragment : Fragment() {
     fun setValidationListeners() {
         var isEnable = arrayListOf<Boolean>(false, false, false, false, false, false, false)
         binding.email.addTextChangedListener {
-            val emailValid = Validation.isEmailValid(it.toString())
+            val emailValid = Validation.isEmailValid(it.toString()) || it.toString().isEmpty()
             if (emailValid) {
                 isEnable[0] = emailValid
                 binding.emailTil.isErrorEnabled = false
@@ -74,7 +74,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.name.addTextChangedListener {
-            val nameValid = Validation.isTextValid(it.toString(), 10, 2)
+            val nameValid = Validation.isTextValid(it.toString(), 10, 2) || it.toString().isEmpty()
             if (nameValid) {
                 isEnable[1] = nameValid
                 binding.nameTil.isErrorEnabled = false
@@ -84,7 +84,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.password.addTextChangedListener {
-            val passwordValid = Validation.isTextValid(it.toString(), 10, 6)
+            val passwordValid = Validation.isTextValid(it.toString(), 10, 6) || it.toString().isEmpty()
             if (passwordValid) {
                 isEnable[2] = passwordValid
                 binding.passwordTil.isErrorEnabled = false
@@ -94,8 +94,8 @@ class RegisterFragment : Fragment() {
         }
 
         binding.passwordAgain.addTextChangedListener {
-            val passwordAgainValid = Validation.isTextValid(it.toString(), 10, 6)
-            val passwordEqual = binding.password.text.toString() == it.toString()
+            val passwordAgainValid = Validation.isTextValid(it.toString(), 10, 6) || it.toString().isEmpty()
+            val passwordEqual = binding.password.text.toString() == it.toString() || it.toString().isEmpty()
             if (!passwordAgainValid) binding.passwordAgainTil.error = getString(R.string.password_valid)
             if (!passwordEqual) binding.passwordAgainTil.error = getString(R.string.password_equal)
             if (passwordAgainValid && passwordEqual) binding.passwordAgainTil.isErrorEnabled = false
@@ -103,7 +103,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.identityNumber.addTextChangedListener {
-            val identityNumberValid = Validation.isTextValid(it.toString(), 11, 11)
+            val identityNumberValid = Validation.isTextValid(it.toString(), 11, 11) || it.toString().isEmpty()
             if (identityNumberValid) {
                 isEnable[4] = identityNumberValid
                 binding.identityNumberTil.isErrorEnabled = false
@@ -113,7 +113,7 @@ class RegisterFragment : Fragment() {
         }
 
         binding.phoneNo.addTextChangedListener {
-            val phoneValid = Validation.isPhoneValid(it.toString())
+            val phoneValid = Validation.isPhoneValid(it.toString()) || it.toString().isEmpty()
             if (phoneValid) {
                 isEnable[5] = phoneValid
                 binding.phoneNoTil.isErrorEnabled = false

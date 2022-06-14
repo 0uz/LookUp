@@ -56,14 +56,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 //        binding.loginPassword.setText("123456")
 
         binding.loginEmail.addTextChangedListener {
-            if (Validation.isEmailValid(it.toString())) {
+            if (Validation.isEmailValid(it.toString()) || it.toString().isEmpty()) {
                 binding.loginEmailTil.isErrorEnabled = false
             } else {
                 binding.loginEmailTil.error = getString(R.string.email_valid)
             }
+
         }
         binding.loginPassword.addTextChangedListener {
-            if (Validation.isTextValid(it.toString(), 10, 6)) {
+            if (Validation.isTextValid(it.toString(), 10, 6) || it.toString().isEmpty()) {
                 binding.loginPasswordTil.isErrorEnabled = false
             } else {
                 binding.loginPasswordTil.error = getString(R.string.password_valid)

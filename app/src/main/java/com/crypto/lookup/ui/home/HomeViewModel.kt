@@ -122,7 +122,7 @@ class HomeViewModel : ViewModel() {
                 }
                 tweetsBTCDaily.postValue(tempBTC)
                 tweetsETHDaily.postValue(tempETH)
-                initTweetCount()
+
             }
 
             override fun onFailed(e: Exception) {
@@ -146,6 +146,7 @@ class HomeViewModel : ViewModel() {
                 }
                 tweetSentBTCDaily.postValue(tempBTC)
                 tweetSentETHDaily.postValue(tempETH)
+                initTweetCount()
             }
 
             override fun onFailed(e: Exception) {

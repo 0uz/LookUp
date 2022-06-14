@@ -56,6 +56,7 @@ class HomeFragment : Fragment() {
         initData()
         homeViewModel.initFearIndex()
         homeViewModel.initTweetCount()
+        homeViewModel.initDailyTweetSentCount()
 
 
         homeViewModel.tweetsBTCDaily.observe(viewLifecycleOwner) {
@@ -135,7 +136,7 @@ class HomeFragment : Fragment() {
                 }
             }
             binding.totalCurrentProfit.text = "%" + df.format(currentSum)
-            binding.totalCurrentProfit.setTextColor(if (currentSum > 0) Color.GREEN else Color.RED)
+            binding.totalCurrentProfit.setTextColor(if (currentSum >= 0) Color.GREEN else Color.RED)
             binding.totalProfit.text = "%" + df.format(closedSum)
             binding.totalProfit.setTextColor(if (closedSum > 0) Color.GREEN else Color.RED)
 

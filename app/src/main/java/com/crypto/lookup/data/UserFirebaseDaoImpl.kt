@@ -53,13 +53,17 @@ class UserFirebaseDaoImpl : UserDao {
     }
 
     override fun retrieve(email: String, listener: onGetDataListener) {
-        db.document(email).get().addOnSuccessListener {
-            if (it.data == null)
-                listener.onFailed(Exception())
-            else
-                listener.onSuccess(it)
-        }.addOnFailureListener {
-            listener.onFailed(it)
+        try {
+            db.document(email).get().addOnSuccessListener {
+                if (it.data == null)
+                    listener.onFailed(Exception())
+                else
+                    listener.onSuccess(it)
+            }.addOnFailureListener {
+                listener.onFailed(it)
+            }
+        } catch (e: Exception) {
+            listener.onFailed(e)
         }
     }
 

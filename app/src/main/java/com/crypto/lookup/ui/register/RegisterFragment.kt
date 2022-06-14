@@ -50,14 +50,14 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         setValidationListeners()
-        //TODO test data remove
-        binding.email.setText("test@test.com")
-        binding.password.setText("123456")
-        binding.passwordAgain.setText("123456")
-        binding.name.setText("Oguzhan")
-        binding.surname.setText("Duymaz")
-        binding.identityNumber.setText("12345678900")
-        binding.phoneNo.setText("123456")
+//        //TODO test data remove
+//        binding.email.setText("test@test.com")
+//        binding.password.setText("123456")
+//        binding.passwordAgain.setText("123456")
+//        binding.name.setText("Oguzhan")
+//        binding.surname.setText("Duymaz")
+//        binding.identityNumber.setText("12345678900")
+//        binding.phoneNo.setText("123456")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -84,6 +84,7 @@ class HomeViewModel : ViewModel() {
                 jsonObject.getJSONArray("data").getJSONObject(0).getString("value_classification")
             )
             fearIndex.postValue(fear)
+
         }
     }
 
@@ -100,7 +101,6 @@ class HomeViewModel : ViewModel() {
                 tweetsBTC.postValue(tempBTC)
                 tweetsETH.postValue(tempETH)
                 initDailyTweetCount()
-                initDailyTweetSentCount()
             }
 
             override fun onFailed(e: Exception) {
@@ -131,7 +131,7 @@ class HomeViewModel : ViewModel() {
         })
     }
 
-    private fun initDailyTweetSentCount() {
+    fun initDailyTweetSentCount() {
         signalCoinService.retrieveTweetSentDaily(object : onGetDataListListener {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onSuccess(data: List<DocumentSnapshot>) {

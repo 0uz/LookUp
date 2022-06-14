@@ -153,6 +153,16 @@ class ProfileFragment : Fragment() {
             userService.updatePassword(binding.profilePassword.text.toString(), object : onSaveDataListener {
                 override fun onSuccess() {
 //                    logout()
+                    Toast.makeText(context, getString(R.string.update_success), Toast.LENGTH_LONG).show()
+                    binding.profilePassword.setText("")
+                    binding.profilePasswordAgain.setText("")
+                    binding.profileOldPassword.setText("")
+
+                    binding.profilePasswordTil.isErrorEnabled = false
+                    binding.profilePasswordAgainTil.isErrorEnabled = false
+                    binding.profileOldPasswordTil.isErrorEnabled = false
+
+
                 }
 
                 override fun onFailed(exception: Exception) {

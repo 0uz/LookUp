@@ -27,7 +27,7 @@
     <string name="register_succesfull">Register Successfull</string>
     <string name="register_failed">Register Failed</string>
     <string name="user_exist">User is already exist</string>
-    <string name="thereAreNoCoin">There are no coin</string>
+    <string name="thereAreNoCoin">There are no subscription</string>
     <string name="updateEmailError">Error while updating email</string>
     <string name="updatePasswordError">Error while updating password</string>
     <string name="hint_old_password">Old Password</string>
@@ -44,6 +44,7 @@
     <string name="buyOpportunity">Buy Opportunity</string>
     <string name="sellOpportunity">Sell Opportunity</string>
     <string name="tweetCount">Twitter Analysis</string>
+    <string name="update_success">Password successfully updated</string>
     <!-- Strings used for fragments for navigation -->
 
 

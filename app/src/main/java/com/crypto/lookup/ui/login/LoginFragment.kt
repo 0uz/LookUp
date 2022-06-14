@@ -52,8 +52,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         val navController = findNavController()
 
         // TODO TEST DATA REMOVE THEM
-        binding.loginEmail.setText("test@test.com")
-        binding.loginPassword.setText("123456")
+//        binding.loginEmail.setText("test@test.com")
+//        binding.loginPassword.setText("123456")
 
         binding.loginEmail.addTextChangedListener {
             if (Validation.isEmailValid(it.toString())) {

@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="@+id/loginPassword_til"
             app:layout_constraintTop_toTopOf="@+id/LoginLoginButton"/>
     <TextView
-            android:text="Forgot Password?"
+            android:text="@string/forgotPassword"
             android:layout_width="117dp"
             android:layout_height="19dp" android:id="@+id/LoginForgotPassword"
             android:textColor="#FFFFFF"

@@ -1,6 +1,7 @@
 package com.crypto.lookup.data
 
 import com.crypto.lookup.data.listeners.onGetDataListener
+import com.crypto.lookup.data.listeners.onGetNoDataListener
 import com.crypto.lookup.data.listeners.onSaveDataListener
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.CollectionReference
@@ -17,4 +18,5 @@ interface UserDao {
     fun updatePassword(newPassword: String, listener: onSaveDataListener)
     fun checkPassword(oldPassword: String, listener: onSaveDataListener)
     fun updateToken(user: User, newToken: String)
+    fun resetPassword(email: String, listener: onGetNoDataListener)
 }

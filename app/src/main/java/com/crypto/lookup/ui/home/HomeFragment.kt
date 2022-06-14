@@ -55,7 +55,6 @@ class HomeFragment : Fragment() {
         binding.signalRecylerView.adapter = homeViewModel.signalCoinAdapter
         initData()
         homeViewModel.initFearIndex()
-        homeViewModel.initTweetCount()
         homeViewModel.initDailyTweetSentCount()
 
 

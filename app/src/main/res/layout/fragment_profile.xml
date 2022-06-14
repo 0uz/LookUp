@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textSize="20sp"
-                android:text="Personal Information"
+                android:text="@string/test_personal_info"
                 android:textColor="@color/white"
                 android:layout_marginTop="10dp" android:paddingStart="10dp"/>
         <LinearLayout
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
                 android:paddingEnd="10dp">
             <TextView
-                    android:text="Name/Surname"
+                    android:text="@string/nameSurname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView8" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
                 android:paddingEnd="10dp">
             <TextView
-                    android:text="E-mail"
+                    android:text="@string/hint_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView11" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
                 android:paddingEnd="10dp">
             <TextView
-                    android:text="Phone Number"
+                    android:text="@string/hint_phone_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView13" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content" android:layout_marginTop="10dp" android:paddingStart="10dp"
                 android:paddingEnd="10dp">
             <TextView
-                    android:text="Identity Number"
+                    android:text="@string/hint_identity_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:id="@+id/textView17" android:layout_weight="1"
                     android:textColor="@color/white" android:textSize="16sp"/>
@@ -119,7 +119,7 @@
                 android:layout_height="1dp" android:id="@+id/view6"
                 android:background="@color/white" android:layout_marginTop="5dp"/>
         <TextView
-                android:text="Update E-mail"
+                android:text="@string/updateEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/textView19" android:layout_marginTop="10dp"
                 android:textSize="18sp" android:textColor="@color/white" android:textAlignment="center"/>
@@ -142,14 +142,14 @@
                     android:textColor="@color/white" android:id="@+id/profile_update_email"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
-                android:text="Apply"
+                android:text="@string/apply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/profile_email_apply"
                 android:layout_marginTop="5dp"
                 android:backgroundTint="@color/turquois"
                 android:layout_gravity="center"/>
         <TextView
-                android:text="Update Password"
+                android:text="@string/updatePassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" android:id="@+id/textView20"
                 android:textColor="@color/white" android:textSize="18sp" android:textAlignment="center"
@@ -213,13 +213,13 @@
             />
         </com.google.android.material.textfield.TextInputLayout>
         <Button
-                android:text="Apply"
+                android:text="@string/apply"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/profile_password_apply"
                 android:backgroundTint="@color/turquois"
                 android:layout_gravity="center"/>
         <Button
-                android:text="Logout"
+                android:text="@string/logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:id="@+id/logoutButton"
                 android:backgroundTint="@android:color/holo_red_dark"

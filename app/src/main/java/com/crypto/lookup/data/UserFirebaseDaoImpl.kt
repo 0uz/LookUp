@@ -2,6 +2,7 @@ package com.crypto.lookup.data
 
 import android.util.Log
 import com.crypto.lookup.data.listeners.onGetDataListener
+import com.crypto.lookup.data.listeners.onGetNoDataListener
 import com.crypto.lookup.data.listeners.onSaveDataListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -152,6 +153,14 @@ class UserFirebaseDaoImpl : UserDao {
 
     override fun updateToken(user: User, newToken: String) {
         db.document(user.email).update("phoneID", newToken)
+    }
+
+    override fun resetPassword(email: String, listener: onGetNoDataListener) {
+        auth.sendPasswordResetEmail(email).addOnSuccessListener {
+            listener.onSuccess()
+        }.addOnFailureListener {
+            listener.onFailed(it)
+        }
     }
 
     private fun updateAuthEmail(newEmail: String, listener: onSaveDataListener) {

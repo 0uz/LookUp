@@ -8,7 +8,7 @@
         tools:context=".ui.dashboard.DashboardFragment" android:background="@color/mainScreenColor" >
 
     <TextView
-            android:text="Prices"
+            android:text="@string/prices"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/textView6"
             android:textColor="@color/white" android:textSize="24sp"
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="50dp"
-                android:text="ALL"
+                android:text="@string/all"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"
@@ -58,7 +58,7 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SUBSCRIBE"
+                android:text="@string/subscribe"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:cornerRadius="6dp"
@@ -80,7 +80,7 @@
                 android:layout_width="230dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Coin"
+                android:text="@string/coin"
                 android:textColor="@color/white"
                 android:textSize="16sp"/>
         <TextView
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Price"
+                android:text="@string/price"
                 android:textColor="@color/white"
                 android:textSize="16sp" android:gravity="left"/>
     </LinearLayout>

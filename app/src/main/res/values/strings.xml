@@ -45,6 +45,20 @@
     <string name="sellOpportunity">Sell Opportunity</string>
     <string name="tweetCount">Twitter Analysis</string>
     <string name="update_success">Password successfully updated</string>
+    <string name="errorResetPassword">Error While Uptade the Password</string>
+    <string name="resetPasswordSuccess">Password Reset Mail Sent</string>
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="send">Send</string>
+    <string name="all">ALL</string>
+    <string name="subscribe">SUBSCRIBE</string>
+    <string name="coin">Coin</string>
+    <string name="price">Price</string>
+    <string name="prices">Prices</string>
+    <string name="nameSurname">Name/Surname</string>
+    <string name="apply">Apply</string>
+    <string name="logout">Logout</string>
+    <string name="updatePassword">Update Password</string>
+    <string name="updateEmail">Update Email</string>
     <!-- Strings used for fragments for navigation -->
 
 

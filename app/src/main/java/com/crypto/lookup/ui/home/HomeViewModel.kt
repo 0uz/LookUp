@@ -122,6 +122,7 @@ class HomeViewModel : ViewModel() {
                 }
                 tweetsBTCDaily.postValue(tempBTC)
                 tweetsETHDaily.postValue(tempETH)
+                initTweetCount()
             }
 
             override fun onFailed(e: Exception) {

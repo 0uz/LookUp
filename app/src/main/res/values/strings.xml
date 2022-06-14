@@ -43,7 +43,7 @@
     <string name="fearIndex">Fear Index:</string>
     <string name="buyOpportunity">Buy Opportunity</string>
     <string name="sellOpportunity">Sell Opportunity</string>
-    <string name="tweetCount">Tweet Counts</string>
+    <string name="tweetCount">Twitter Analysis</string>
     <!-- Strings used for fragments for navigation -->
 
 

@@ -1,7 +1,6 @@
 package com.crypto.lookup.ui.home
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -101,6 +100,7 @@ class HomeViewModel : ViewModel() {
                 tweetsBTC.postValue(tempBTC)
                 tweetsETH.postValue(tempETH)
                 initDailyTweetCount()
+                initDailyTweetSentCount()
             }
 
             override fun onFailed(e: Exception) {
@@ -131,7 +131,7 @@ class HomeViewModel : ViewModel() {
         })
     }
 
-    fun initDailyTweetSentCount() {
+    private fun initDailyTweetSentCount() {
         signalCoinService.retrieveTweetSentDaily(object : onGetDataListListener {
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onSuccess(data: List<DocumentSnapshot>) {
@@ -143,8 +143,6 @@ class HomeViewModel : ViewModel() {
                     if (dataTweetSent.get(i)!!.symbol == "BTCUSDT") tempBTC = dataTweetSent.get(i)!!
                     if (dataTweetSent.get(i)!!.symbol == "ETHUSDT") tempETH = dataTweetSent.get(i)!!
                 }
-                Log.w("BTC DAILY", dataTweetSent.toString())
-
                 tweetSentBTCDaily.postValue(tempBTC)
                 tweetSentETHDaily.postValue(tempETH)
             }

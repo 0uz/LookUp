@@ -3,7 +3,6 @@ package com.crypto.lookup.ui.home
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,11 +56,7 @@ class HomeFragment : Fragment() {
         initData()
         homeViewModel.initFearIndex()
         homeViewModel.initTweetCount()
-        homeViewModel.initDailyTweetSentCount()
 
-        homeViewModel.tweetSentBTCDaily.observe(viewLifecycleOwner) {
-            Log.w("BTC DAILY", it.toString())
-        }
 
         homeViewModel.tweetsBTCDaily.observe(viewLifecycleOwner) {
             if (homeViewModel.tweetsBTC.value!!.size > 0) {
@@ -69,9 +64,26 @@ class HomeFragment : Fragment() {
                     .sum() / homeViewModel.tweetsBTC.value!!.size
                 val perc = (it.tweet_count - average) / average.toFloat() * 100
                 val df = DecimalFormat("#.##")
-                if (perc < 0) binding.tweetCountBTC.text = "Bitcoin reaction under in %" + df.format(perc * -1)
-                else binding.tweetCountBTC.text = "Bitcoin reaction up in %" + df.format(perc)
-                binding.tweetCountBTC.setTextColor(if (perc > 0) Color.GREEN else Color.RED)
+                val positive = homeViewModel.tweetSentBTCDaily.value!!.positive
+                val negative = homeViewModel.tweetSentBTCDaily.value!!.negative
+                val neutral = homeViewModel.tweetSentBTCDaily.value!!.neutral
+                var tvText = "Bitcoin reaction is "
+
+                if (perc < 0) tvText += "decrease %" + df.format(perc * -1)
+                else tvText += "increase %" + df.format(perc)
+
+                var isRed = false
+                if (positive > negative && positive > neutral) {
+                    tvText += " and positive"
+                } else if (negative >= positive && negative >= neutral) {
+                    tvText += " and negative"
+                    isRed = true
+                } else {
+                    tvText += " and neutral"
+                }
+
+                binding.tweetCountBTC.text = tvText
+                binding.tweetCountBTC.setTextColor(if (!isRed) Color.GREEN else Color.RED)
             }
         }
         homeViewModel.tweetsETHDaily.observe(viewLifecycleOwner) {
@@ -80,9 +92,27 @@ class HomeFragment : Fragment() {
                     .sum() / homeViewModel.tweetsETH.value!!.size
                 val perc = (homeViewModel.tweetsETHDaily.value!!.tweet_count - average) / average.toFloat() * 100
                 val df = DecimalFormat("#.##")
-                if (perc < 0) binding.tweetCountETH.text = "Ethereum reaction under in %" + df.format(perc * -1)
-                else binding.tweetCountETH.text = "Ethereum reaction up in %" + df.format(perc)
-                binding.tweetCountETH.setTextColor(if (perc > 0) Color.GREEN else Color.RED)
+
+                val positive = homeViewModel.tweetSentETHDaily.value!!.positive
+                val negative = homeViewModel.tweetSentETHDaily.value!!.negative
+                val neutral = homeViewModel.tweetSentETHDaily.value!!.neutral
+                var tvText = "Ethereum reaction is "
+
+                if (perc < 0) tvText += "decrease %" + df.format(perc * -1)
+                else tvText += "increase %" + df.format(perc)
+
+                var isRed = false
+                if (positive > negative && positive > neutral) {
+                    tvText += " and positive"
+                } else if (negative >= positive && negative >= neutral) {
+                    tvText += " and negative"
+                    isRed = true
+                } else {
+                    tvText += " and neutral"
+                }
+
+                binding.tweetCountETH.text = tvText
+                binding.tweetCountETH.setTextColor(if (!isRed) Color.GREEN else Color.RED)
             }
         }
 
